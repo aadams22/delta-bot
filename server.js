@@ -20,8 +20,11 @@ app.get('/', function(req, res){
 
 
 app.post('/post', function(req, res){
-	console.log('', req.body.text);
-	var msg = 'hi world: ' + req.body.text;
+	var origin = req.body.text[0];
+	var destination = req.body.text[1];
+
+	var msg = 'this is your origin: ' + origin + '. this is your destination: ' + destination ;
+
   var body = {
     response_type: "in_channel",
     text: msg 
@@ -30,6 +33,8 @@ app.post('/post', function(req, res){
   res.send(body);
 
 });
+
+
 
 
 app.listen(app.get('port'), function() {

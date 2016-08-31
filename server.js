@@ -20,10 +20,11 @@ app.get('/', function(req, res){
 
 
 app.post('/post', function(req, res){
-
+	console.log('', req.body);
+	var msg = 'hi world, ' + req.body;
   var body = {
     response_type: "in_channel",
-    text: "hi there world"
+    text: msg 
   };
 
   res.send(body);

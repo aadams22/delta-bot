@@ -20,8 +20,8 @@ app.get('/', function(req, res){
 
 
 app.post('/post', function(req, res){
-	var origin = req.body.text[0];
-	var destination = req.body.text[1];
+	var origin = req.body.text.split(/[ ]+/)[0];
+	var destination = req.body.text.split(/[ ]+/)[1];
 
 	var msg = 'this is your origin: ' + origin + '. this is your destination: ' + destination ;
 

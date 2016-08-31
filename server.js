@@ -20,8 +20,8 @@ app.get('/', function(req, res){
 
 
 app.post('/post', function(req, res){
-	console.log('', req.body);
-	var msg = 'hi world, ' + req.body;
+	console.log('', req.body.text);
+	var msg = 'hi world: ' + req.body.text;
   var body = {
     response_type: "in_channel",
     text: msg 

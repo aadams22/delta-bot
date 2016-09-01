@@ -35,8 +35,8 @@ var conversion = {
 
 	},
 	convertCity: function(city) {
-		// airports.findWhere({ 'name' : city }); 
-		return city
+		return airports.findWhere({ 'name' : city }).get('iata'); 
+		 
 	}
 }
 
@@ -52,7 +52,7 @@ app.post('/post', function(req, res){
 	// if ( returnDate.includes(/^[A-Za-z ]+$/) ) { conversion.convertDate(returnDate) };
 
 
-	var msg = 'this is your origin: ' + origin + '. this is your destination: ' + destination + 'this is departure date: ' + departureDate + 'this is arrival date: ' + returnDate;
+	var msg = 'origin: ' + origin + '. destination: ' + destination + ' departure date: ' + departureDate + ' arrival date: ' + returnDate;
 
   var body = {
     response_type: "in_channel",

@@ -45,14 +45,11 @@ app.post('/post', function(req, res){
 	var destination 	= conversion.convertCity(req.body.text.split(/[ ]+/)[1]);
 	var departureDate = req.body.text.split(/[ ]+/)[2];
 	var returnDate 		= req.body.text.split(/[ ]+/)[3];
-
+	var msg						= null;
 	//!!Future implimentation: allowences for written months
 	// if ( departureDate.includes(/^[A-Za-z ]+$/) ) { conversion.convertDate(departureDate) };
 	// if ( returnDate.includes(/^[A-Za-z ]+$/) ) { conversion.convertDate(returnDate) };
 
-
-
-	var msg = 'origin: ' + origin + '. destination: ' + destination + ' departure date: ' + departureDate + ' arrival date: ' + returnDate;
 
 
 	request({
@@ -63,14 +60,16 @@ app.post('/post', function(req, res){
 		}, function(err, res, body) {
 
 			if(err) { 
-				console.log(err); 
+				msg = err;
 			}else { 
 				console.log(res.statusCode, body); 
+				msg = 'this is from expedia: ' + res.statusCode + ' ' + body;
 			}
 
 		}
 	});
 
+	// var msg = 'origin: ' + origin + '. destination: ' + destination + ' departure date: ' + departureDate + ' arrival date: ' + returnDate;
 
 
 

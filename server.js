@@ -35,7 +35,8 @@ var conversion = {
 
 	},
 	convertCity: function(city) {
-		airports.findWhere({ 'name' : city }); 
+		// airports.findWhere({ 'name' : city }); 
+		return city
 	}
 }
 

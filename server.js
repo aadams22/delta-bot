@@ -45,7 +45,7 @@ app.post('/post', function(req, res){
 	var destination 	= conversion.convertCity(req.body.text.split(/[ ]+/)[1]);
 	var departureDate = req.body.text.split(/[ ]+/)[2];
 	var returnDate 		= req.body.text.split(/[ ]+/)[3];
-	var msg						= null;
+	
 	//!!Future implimentation: allowences for written months
 	// if ( departureDate.includes(/^[A-Za-z ]+$/) ) { conversion.convertDate(departureDate) };
 	// if ( returnDate.includes(/^[A-Za-z ]+$/) ) { conversion.convertDate(returnDate) };
@@ -57,13 +57,13 @@ app.post('/post', function(req, res){
 		method: 'POST',
 		headers: {
 			'Content-Type': 'JSON',
-		}, function(err, res, body) {
+		}, function(err, res, data) {
 
 			if(err) { 
-				msg = err;
+				var msg = err;
 			}else { 
 				console.log(res.statusCode, body); 
-				msg = 'this is from expedia: ' + res.statusCode + ' ' + body;
+				var msg = 'this is from expedia: ' + res.statusCode + ' ' + data;
 			}
 
 		}

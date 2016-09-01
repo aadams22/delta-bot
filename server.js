@@ -28,15 +28,14 @@ var conversion = {
 	convertDate: function(date) {
 		//checks if the date is in place 1 or 2 of the date
 		if (!isNaN(date.split(/[ ]+/)[0])) {  
-			return months.indexOf(date.split(/[ ]+/)[0]) + 1)
+			return months.indexOf(date.split(/[ ]+/)[0] + 1)
 		}else if(!isNaN(date.split(/[ ]+/)[1])) {
-			return months.indexOf(date.split(/[ ]+/)[1]) + 1)
+			return months.indexOf(date.split(/[ ]+/)[1] + 1)
 		}
 
 	},
 	convertCity: function(city) {
-		airports.findWhere({ 'name' : city });
-		return 
+		airports.findWhere({ 'name' : city }); 
 	}
 }
 

@@ -16,10 +16,8 @@ app.get('/', function(req, res){
   res.send('Huzzah! I still work!');
 });
 
-// process.env.FLIGHTBOT_EXPEDIA_API_KEY
 
-//1. find solution for converting city names into airport codes
-//2. find solution for formatting dates
+//2. find solution for formatting dates = year-mo-da
 
 var months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December' ];
 
@@ -35,8 +33,8 @@ var conversion = {
 
 	},
 	convertCity: function(city) {
-		return airports.findWhere({ 'city' : city }).get('iata'); 
-		 
+		//runs a backbone query on the airport-codes module to find the IATA for user's input city
+		return airports.findWhere({ 'city' : city }).get('iata'); 		 
 	}
 }
 
@@ -48,8 +46,10 @@ app.post('/post', function(req, res){
 	var departureDate = req.body.text.split(/[ ]+/)[2];
 	var returnDate 		= req.body.text.split(/[ ]+/)[3];
 
+	//!!Future implimentation: allowences for written months
 	// if ( departureDate.includes(/^[A-Za-z ]+$/) ) { conversion.convertDate(departureDate) };
 	// if ( returnDate.includes(/^[A-Za-z ]+$/) ) { conversion.convertDate(returnDate) };
+
 
 
 	var msg = 'origin: ' + origin + '. destination: ' + destination + ' departure date: ' + departureDate + ' arrival date: ' + returnDate;
@@ -64,21 +64,21 @@ app.post('/post', function(req, res){
 });
 
 
-// request({
-// 	url: 'http://terminal2.expedia.com/x/mflights/search?departureAirport=' + origin + '&arrivalAirport=' + destination + '&departureDate=' + departureDate + '&returnDate=' + returnDate + '&apikey=' + process.env.FLIGHTBOT_EXPEDIA_API_KEY,
-// 	method: 'POST',
-// 	headers: {
-// 		'Content-Type': 'JSON',
-// 	}, function(err, res, body) {
+request({
+	url: 'http://terminal2.expedia.com/x/mflights/search?departureAirport=' + origin + '&arrivalAirport=' + destination + '&departureDate=' + departureDate + '&returnDate=' + returnDate + '&apikey=' + process.env.FLIGHTBOT_EXPEDIA_API_KEY,
+	method: 'POST',
+	headers: {
+		'Content-Type': 'JSON',
+	}, function(err, res, body) {
 
-// 		if(err) { 
-// 			console.log(err); 
-// 		}else { 
-// 			console.log(res.statusCode, body); 
-// 		}
+		if(err) { 
+			console.log(err); 
+		}else { 
+			console.log(res.statusCode, body); 
+		}
 
-// 	}
-// });
+	}
+});
 
 
 

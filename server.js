@@ -42,10 +42,10 @@ var conversion = {
 
 
 app.post('/post', function(req, res){
-	var origin 				= conversion.convertCity(req.body.text.split(/[, ]+/)[0]);
-	var destination 	= conversion.convertCity(req.body.text.split(/[, ]+/)[1]);
-	var departureDate = req.body.text.split(/[, ]+/)[2];
-	var returnDate 		= req.body.text.split(/[, ]+/)[3];
+	var origin 				= conversion.convertCity(req.body.text.split(/[ ]+/)[0]);
+	var destination 	= conversion.convertCity(req.body.text.split(/[ ]+/)[1]);
+	var departureDate = req.body.text.split(/[ ]+/)[2];
+	var returnDate 		= req.body.text.split(/[ ]+/)[3];
 
 	// if ( departureDate.includes(/^[A-Za-z ]+$/) ) { conversion.convertDate(departureDate) };
 	// if ( returnDate.includes(/^[A-Za-z ]+$/) ) { conversion.convertDate(returnDate) };

@@ -54,6 +54,26 @@ app.post('/post', function(req, res){
 
 	var msg = 'origin: ' + origin + '. destination: ' + destination + ' departure date: ' + departureDate + ' arrival date: ' + returnDate;
 
+
+	request({
+		url: 'http://terminal2.expedia.com/x/mflights/search?departureAirport=' + origin + '&arrivalAirport=' + destination + '&departureDate=' + departureDate + '&returnDate=' + returnDate + '&apikey=' + process.env.FLIGHTBOT_EXPEDIA_API_KEY,
+		method: 'POST',
+		headers: {
+			'Content-Type': 'JSON',
+		}, function(err, res, body) {
+
+			if(err) { 
+				console.log(err); 
+			}else { 
+				console.log(res.statusCode, body); 
+			}
+
+		}
+	});
+
+
+
+
   var body = {
     response_type: "in_channel",
     text: msg 
@@ -64,21 +84,7 @@ app.post('/post', function(req, res){
 });
 
 
-request({
-	url: 'http://terminal2.expedia.com/x/mflights/search?departureAirport=' + origin + '&arrivalAirport=' + destination + '&departureDate=' + departureDate + '&returnDate=' + returnDate + '&apikey=' + process.env.FLIGHTBOT_EXPEDIA_API_KEY,
-	method: 'POST',
-	headers: {
-		'Content-Type': 'JSON',
-	}, function(err, res, body) {
 
-		if(err) { 
-			console.log(err); 
-		}else { 
-			console.log(res.statusCode, body); 
-		}
-
-	}
-});
 
 
 

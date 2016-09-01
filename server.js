@@ -52,24 +52,24 @@ app.post('/post', function(req, res){
 
 
 
-	request({
-		url: 'http://terminal2.expedia.com/x/mflights/search?departureAirport=' + origin + '&arrivalAirport=' + destination + '&departureDate=' + departureDate + '&returnDate=' + returnDate + '&apikey=' + process.env.FLIGHTBOT_EXPEDIA_API_KEY,
-		method: 'POST',
-		headers: {
-			'Content-Type': 'JSON',
-		}, function(err, res, data) {
+	// request({
+	// 	url: 'http://terminal2.expedia.com/x/mflights/search?departureAirport=' + origin + '&arrivalAirport=' + destination + '&departureDate=' + departureDate + '&returnDate=' + returnDate + '&apikey=' + process.env.FLIGHTBOT_EXPEDIA_API_KEY,
+	// 	method: 'POST',
+	// 	headers: {
+	// 		'Content-Type': 'JSON',
+	// 	}, function(err, res, data) {
 
-			if(err) { 
-				var msg = err;
-			}else { 
-				console.log(res.statusCode, body); 
-				var msg = 'this is from expedia: ' + res.statusCode + ' ' + data;
-			}
+	// 		if(err) { 
+	// 			var msg = err;
+	// 		}else { 
+	// 			console.log(res.statusCode, body); 
+	// 			var msg = 'this is from expedia: ' + res.statusCode + ' ' + data;
+	// 		}
 
-		}
-	});
+	// 	}
+	// });
 
-	// var msg = 'origin: ' + origin + '. destination: ' + destination + ' departure date: ' + departureDate + ' arrival date: ' + returnDate;
+	var msg = 'origin: ' + origin + '. destination: ' + destination + ' departure date: ' + departureDate + ' arrival date: ' + returnDate;
 
 
 

@@ -36,7 +36,7 @@ var conversion = {
 	},
 	convertCity: function(city) {
 		airports.findWhere({ 'name' : city });
-
+		return 
 	}
 }
 
@@ -48,8 +48,8 @@ app.post('/post', function(req, res){
 	var departureDate = req.body.text.split(/[, ]+/)[2];
 	var returnDate 		= req.body.text.split(/[, ]+/)[3];
 
-	if ( departureDate.includes(/^[A-Za-z ]+$/) ) { conversion.convertDate(departureDate) };
-	if ( returnDate.includes(/^[A-Za-z ]+$/) ) { conversion.convertDate(returnDate) };
+	// if ( departureDate.includes(/^[A-Za-z ]+$/) ) { conversion.convertDate(departureDate) };
+	// if ( returnDate.includes(/^[A-Za-z ]+$/) ) { conversion.convertDate(returnDate) };
 
 
 	var msg = 'this is your origin: ' + origin + '. this is your destination: ' + destination ;
@@ -64,21 +64,21 @@ app.post('/post', function(req, res){
 });
 
 
-request({
-	url: 'http://terminal2.expedia.com/x/mflights/search?departureAirport=' + origin + '&arrivalAirport=' + destination + '&departureDate=' + departureDate + '&returnDate=' + returnDate + '&apikey=' + process.env.FLIGHTBOT_EXPEDIA_API_KEY,
-	method: 'POST',
-	headers: {
-		'Content-Type': 'JSON',
-	}, function(err, res, body) {
+// request({
+// 	url: 'http://terminal2.expedia.com/x/mflights/search?departureAirport=' + origin + '&arrivalAirport=' + destination + '&departureDate=' + departureDate + '&returnDate=' + returnDate + '&apikey=' + process.env.FLIGHTBOT_EXPEDIA_API_KEY,
+// 	method: 'POST',
+// 	headers: {
+// 		'Content-Type': 'JSON',
+// 	}, function(err, res, body) {
 
-		if(err) { 
-			console.log(err); 
-		}else { 
-			console.log(res.statusCode, body); 
-		}
+// 		if(err) { 
+// 			console.log(err); 
+// 		}else { 
+// 			console.log(res.statusCode, body); 
+// 		}
 
-	}
-});
+// 	}
+// });
 
 
 

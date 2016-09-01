@@ -35,7 +35,7 @@ var conversion = {
 
 	},
 	convertCity: function(city) {
-		return airports.findWhere({ 'name' : city }).get('iata'); 
+		return airports.findWhere({ 'city' : city }).get('iata'); 
 		 
 	}
 }

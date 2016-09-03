@@ -129,7 +129,12 @@ app.post('/post', function(req, res){
 			// flightData.printF(sorted)
 		  body = {
 		    response_type: "in_channel",
-		    text: "these are your flights: " +  sorted[0]
+		    text: "these are your flights: " 
+		    		+  "Flight Number: " + f[0].flightNumber 
+						+ ", Departure: " + f[0].departure
+						+ ", Arrival: "   + f[0].arrival
+						+ ", Arline: "		+ f[0].arrival
+						+ ", Stops: "			+ f[0].stops)
 		  };
 
   		res.send(body);

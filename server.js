@@ -136,7 +136,7 @@ app.post('/post', function(req, res){
 
 		  body = {
 		    response_type: "in_channel",
-		    text: "these are your flights: " + s[0].flightNumber + s[0].departure + s[0].arrival + s[0].airline
+		    text: "these are your flight options: Flight Number" + s[0].flightNumber + " " + s[0].departure + " " + s[0].arrival + " " + s[0].airline
 		  };
 
   		res.send(body);

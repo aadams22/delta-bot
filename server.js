@@ -127,16 +127,16 @@ app.post('/post', function(req, res){
 			flightData.findDepartures(data); 
 			var s = flights.sort(flightData.sortFlights);
 			// flightData.printF(sorted)
-			// msg = "these are your flights: " 
-		 //    		+ "Flight Number: " + s[0].flightNumber 
-			// 			+ ", Departure: "   + s[0].departure
-			// 			+ ", Arrival: "     + s[0].arrival
-			// 			+ ", Arline: "		  + s[0].airline
-			// 			+ ", Stops: "		  	+ s[0].stops);
+
+			var a = [];
+			for (var i = 0; i < s.length; i++) {
+				"Flight: " + s[i].flightNumber + " Departing on " + s[i].departure + " Arriving at" + s[i].arrival + " on" + s[i].airline
+			};
+			msg = a.join();
 
 		  body = {
 		    response_type: "in_channel",
-		    text: "these are your flight options: Flight Number " + s[0].flightNumber + " Departing " + s[0].departure + " Arriving " + s[0].arrival + " on" + s[0].airline
+		    text: msg
 		  };
 
   		res.send(body);

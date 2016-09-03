@@ -118,11 +118,11 @@ app.post('/post', function(req, res){
 
 
 	//if the departure param exists, check and see if the date is in the past, if the departure date does not exist, send error message
-	if(departureDate) 		{ validations.isDateValid(departureDate); }else { validations.incompleteParams(departureDate) }
+	// if(departureDate) 		{ validations.isDateValid(departureDate); }else { validations.incompleteParams(departureDate) }
 	
-	if(origin) 						{ validations.incompleteParams(origin) }
-	else if(destination) 	{ validations.incompleteParams(destination) }
-	else if(airline) 			{ validations.incompleteParams(airline) }
+	// if(origin) 						{ validations.incompleteParams(origin) }
+	// else if(destination) 	{ validations.incompleteParams(destination) }
+	// else if(airline) 			{ validations.incompleteParams(airline) }
 	// else									{ getflightData(origin, destination, departureDate, airline) }
 
 	var r = ' origin: ' + origin 

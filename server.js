@@ -69,31 +69,15 @@ function findDepartures(data) {
 									"airline": data.legs[i].segments[0].airlineName,
 									"stops": data.legs[i].segments[0].stops
 								});
-
 	};
-
-	// return flights;
 	
-}
+};
 
 
 
-	var url     = "http://terminal2.expedia.com/x/mflights/search?departureAirport=LAX&arrivalAirport=ORD&departureDate=2016-10-22&apikey=" + process.env.FLIGHTBOT_EXPEDIA_API_KEY;
-	var method  = 'GET';
-	var async   = true;
+
 	var XMLHttpRequest = require("xmlhttprequest").XMLHttpRequest;
 	var request = new XMLHttpRequest();
-
-	request.onload = function() {
-		var status = request.status;
-		var data = JSON.parse(request.responseText);
-		console.log("status ", status);
-		findDepartures(data);
-	};
-
-	request.open(method, url, async);
-	request.setRequestHeader("Content-Type", "json;");
-	
 
 
 
@@ -102,8 +86,8 @@ function findDepartures(data) {
 //need to find a solution for cities with 2 words that include a white space
 app.post('/post', function(req, res){
 	// userParams    = req.body.text.split(/[ ]+/);
-	// origin 				= req.body.text.split(/[ ]+/)[0];
-	// destination 	= req.body.text.split(/[ ]+/)[1];
+	// origin 				= conversion.convertCity(req.body.text.split(/[ ]+/)[0]);
+	// destination 	= conversion.convertCity(req.body.text.split(/[ ]+/)[1]);
 	// departureDate = req.body.text.split(/[ ]+/)[2];
 	// airline				= req.body.text.split(/[ ]+/)[3];
 	
@@ -119,13 +103,24 @@ app.post('/post', function(req, res){
 
 	// var url     = "http://terminal2.expedia.com/x/mflights/search?departureAirport=" + origin + "&arrivalAirport=" + destination + "&departureDate=" + departureDate + "&airlineName=" + airline + "&apikey=" + process.env.FLIGHTBOT_EXPEDIA_API_KEY;
 
+	var url     = "http://terminal2.expedia.com/x/mflights/search?departureAirport=LAX&arrivalAirport=ORD&departureDate=2016-10-22&apikey=" + process.env.FLIGHTBOT_EXPEDIA_API_KEY;
+	var method  = 'GET';
+	var async   = true;
+	
+	request.onload = function() {
+		var status = request.status;
+		var data = JSON.parse(request.responseText);
+		console.log("status ", status);
+		findDepartures(data);
+	};
 
-	// r = ' origin: ' + origin 
-	// 			+ ' destination: ' + destination 
-	// 			+ ' departure date: ' + departureDate 
-	// 			+ ' arrival date: ' + returnDate;
+	request.open(method, url, async);
+	request.setRequestHeader("Content-Type", "json;");
+  request.send();
 
-	request.send();
+
+
+
 	msg = "these are flights: " + flights[0].flightNumber;
 
   var body = {

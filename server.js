@@ -131,7 +131,7 @@ app.post('/post', function(req, res){
 
 	// msg = "This was your request:" + r + "These are your options:" + flights;
 
-	msg = getflightData();
+	msg = "hi"
 
   var body = {
     response_type: "in_channel",

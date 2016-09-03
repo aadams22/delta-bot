@@ -63,7 +63,7 @@ var conversion = {
 function findDepartures(data) {
 	for (var i = 0; i < data.legs.length; i++) {
 		flights.push({
-									"flight number": data.legs[i].segments[0].flightNumber,
+									"flightNumber": data.legs[i].segments[0].flightNumber,
 									"departure": data.legs[i].segments[0].departureTime,
 									"arrival": data.legs[i].segments[0].arrivalTime,
 									"airline": data.legs[i].segments[0].airlineName,

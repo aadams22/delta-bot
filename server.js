@@ -123,14 +123,14 @@ app.post('/post', function(req, res){
 	if(origin) 						{ validations.incompleteParams(origin) }
 	else if(destination) 	{ validations.incompleteParams(destination) }
 	else if(airline) 			{ validations.incompleteParams(airline) }
-	else									{ getflightData(origin, destination, departureDate, airline) }
+	// else									{ getflightData(origin, destination, departureDate, airline) }
 
 	var r = ' origin: ' + origin 
 				+ ' destination: ' + destination 
 				+ ' departure date: ' + departureDate 
 				+ ' arrival date: ' + returnDate;
 
-	msg = "This was your request:" + r + "These are your options:" + flights;
+	msg = "This was your request:" + r // + "These are your options:" + flights;
 
   var body = {
     response_type: "in_channel",

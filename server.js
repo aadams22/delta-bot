@@ -78,13 +78,15 @@ var flightData = {
 		return a.timeEpochSec - b.timeEpochSec;
 	},
 	printF: function(f) {
+		var a = [];
 		for (var i = 0; i < f.length; i++) {
-			"Flight Number: " + f[i].flightNumber 
-			+ ", Departure: " + f[i].departure
-			+ ", Arrival: "   + f[i].arrival
-			+ ", Arline: "		+ f[i].arrival
-			+ ", Stops: "			+ f[i].stops
+			a.push("Flight Number: " + f[i].flightNumber 
+						+ ", Departure: " + f[i].departure
+						+ ", Arrival: "   + f[i].arrival
+						+ ", Arline: "		+ f[i].arrival
+						+ ", Stops: "			+ f[i].stops)
 		};
+		return a.join();
 	}
 
 }
@@ -124,11 +126,10 @@ app.post('/post', function(req, res){
 		if(status == 200) { 
 			flightData.findDepartures(data); 
 			var sorted = flights.sort(flightData.sortFlights);
-			
-			msg = flightData.printF(sorted) 
+			// flightData.printF(sorted)
 		  body = {
 		    response_type: "in_channel",
-		    text: "these are your flights: " + msg
+		    text: "these are your flights: " +  sorted[0]
 		  };
 
   		res.send(body);

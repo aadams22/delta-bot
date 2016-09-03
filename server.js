@@ -11,15 +11,14 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.set('port', (process.env.PORT || 8080));
 
 
-// /getflights [origin, destination, departureDate, returnDate, airline]
 // /getflights [origin, destination, departureDate, airline]
+
 
 var msg 			  	= null;
 var userParams    = null;
 var origin			  = null;
 var destination   = null;
 var departureDate = null;
-var returnDate 		= null;
 var airline				= null;
 var today 				= new Date();
 var currentYear   = today.getFullYear();
@@ -75,21 +74,13 @@ function findDepartures(data) {
 }
 
 
-function getflightData(d) {
+function getflightData(origin, destination, departureDate, airline) {
 
-	var url     = null;
+	var url     = "http://terminal2.expedia.com/x/mflights/search?departureAirport=" + origin + "&arrivalAirport=" + destination + "&departureDate=" + departureDate + "&apikey=" + process.env.FLIGHTBOT_EXPEDIA_API_KEY;
 	var method  = 'GET';
 	var async   = true;
 	var XMLHttpRequest = require("xmlhttprequest").XMLHttpRequest;
 	var request = new XMLHttpRequest();
-
-
-	if(d.returnDate) {
-		url = "http://terminal2.expedia.com/x/mflights/search?departureAirport=LAX&arrivalAirport=ORD&departureDate=2016-10-22&apikey=" + process.env.FLIGHTBOT_EXPEDIA_API_KEY;
-	}else {
-		url = "http://terminal2.expedia.com/x/mflights/search?departureAirport=" + d.origin + "&arrivalAirport=" + d.destination + "&departureDate=" + d.departureDate + "&apikey=" + process.env.FLIGHTBOT_EXPEDIA_API_KEY;
-
-	}
 
 	request.onload = function() {
 		var status = request.status;
@@ -113,23 +104,23 @@ app.get('/', function(req, res){
   res.send("Huzzah! I still work! Now let's have some tea.");
 });
 
-
+//need to find a solution for cities with 2 words that include a white space
 app.post('/post', function(req, res){
 	userParams    = req.body.text.split(/[ ]+/);
 	origin 				= conversion.convertCity(userParams[0].trim());
 	destination 	= conversion.convertCity(userParams[1].trim());
 	departureDate = userParams[2].trim();
-	returnDate 		= userParams[3].trim();
-	airline				= userParams[4].trim();
+	airline				= userParams[3].trim();
 	
 
 
 	//if the departure param exists, check and see if the date is in the past, if the departure date does not exist, send error message
-	if(departureDate) { validations.isDateValid(departureDate); }else { validations.incompleteParams(departureDate) }
-	//if return param exists, check and see if the date is in the past. This param is not required so other validations do not need to take place
-	if(returnDate) { validations.isDateValid(returnDate); }
-
-
+	if(departureDate) 		{ validations.isDateValid(departureDate); }else { validations.incompleteParams(departureDate) }
+	
+	if(origin) 						{ validations.incompleteParams(origin) }
+	else if(destination) 	{ validations.incompleteParams(destination) }
+	else if(airline) 			{ validations.incompleteParams(airline) }
+	else									{ getflightData(origin, destination, departureDate, airline) }
 
 	msg = 'origin: ' + origin 
 				+ '. destination: ' + destination 

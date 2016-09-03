@@ -48,11 +48,7 @@ var conversion = {
 	},
 	convertCity: function(city) {
 		//runs a backbone query on the airport-codes module to find the IATA for user's input city
-		// if(airports.findWhere({ 'city' : city }).get('iata')) { 
 			return airports.findWhere({ 'city' : city }).get('iata'); 
-		// }else{ 
-		// 	return validations.incompleteParams(city);
-		// };
 	},
 	addYear: function(date){
 		console.log('this is split date: ', date.split(''));
@@ -112,8 +108,8 @@ app.get('/', function(req, res){
 //need to find a solution for cities with 2 words that include a white space
 app.post('/post', function(req, res){
 	// userParams    = req.body.text.split(/[ ]+/);
-	origin 				= conversion.convertCity(req.body.text.split(/[ ]+/)[0]);
-	destination 	= conversion.convertCity(req.body.text.split(/[ ]+/)[1]);
+	origin 				= req.body.text.split(/[ ]+/)[0];
+	destination 	= req.body.text.split(/[ ]+/)[1];
 	departureDate = req.body.text.split(/[ ]+/)[2];
 	airline				= req.body.text.split(/[ ]+/)[3];
 	

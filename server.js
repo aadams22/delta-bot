@@ -20,6 +20,7 @@ var origin			  = null;
 var destination   = null;
 var departureDate = null;
 var airline				= null;
+var flights				= [];
 var today 				= new Date();
 var currentYear   = today.getFullYear();
 
@@ -63,20 +64,22 @@ var conversion = {
 
 function findDepartures(data) {
 	for (var i = 0; i < data.legs.length; i++) {
-		console.log("========FLIGHT " + i + "========");
-		// console.log(data.legs[i].legId);
-		console.log(data.legs[i].segments[0].departureTime);
-		console.log(data.legs[i].segments[0].arrivalTime);
-		console.log(data.legs[i].segments[0].airlineName);
-		console.log(data.legs[i].segments[0].flightNumber);
-		console.log(data.legs[i].segments[0].stops);
+		flights.push({
+									"flight number": data.legs[i].segments[0].flightNumber,
+									"departure": data.legs[i].segments[0].departureTime,
+									"arrival": data.legs[i].segments[0].arrivalTime,
+									"airline": data.legs[i].segments[0].airlineName,
+									"stops": data.legs[i].segments[0].stops
+								});
+
 	};
+	return flights;
 }
 
 
 function getflightData(origin, destination, departureDate, airline) {
 
-	var url     = "http://terminal2.expedia.com/x/mflights/search?departureAirport=" + origin + "&arrivalAirport=" + destination + "&departureDate=" + departureDate + "&apikey=" + process.env.FLIGHTBOT_EXPEDIA_API_KEY;
+	var url     = "http://terminal2.expedia.com/x/mflights/search?departureAirport=" + origin + "&arrivalAirport=" + destination + "&departureDate=" + departureDate + "&airlineName=" + airline + "&apikey=" + process.env.FLIGHTBOT_EXPEDIA_API_KEY;
 	var method  = 'GET';
 	var async   = true;
 	var XMLHttpRequest = require("xmlhttprequest").XMLHttpRequest;
@@ -122,10 +125,12 @@ app.post('/post', function(req, res){
 	else if(airline) 			{ validations.incompleteParams(airline) }
 	else									{ getflightData(origin, destination, departureDate, airline) }
 
-	msg = 'origin: ' + origin 
-				+ '. destination: ' + destination 
+	var r = ' origin: ' + origin 
+				+ ' destination: ' + destination 
 				+ ' departure date: ' + departureDate 
 				+ ' arrival date: ' + returnDate;
+
+	msg = "This was your request:" + r + "These are your options:" + flights;
 
   var body = {
     response_type: "in_channel",

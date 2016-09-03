@@ -80,8 +80,8 @@ var conversion = {
 // 	var url     = "http://terminal2.expedia.com/x/mflights/search?departureAirport=" + origin + "&arrivalAirport=" + destination + "&departureDate=" + departureDate + "&airlineName=" + airline + "&apikey=" + process.env.FLIGHTBOT_EXPEDIA_API_KEY;
 // 	var method  = 'GET';
 // 	var async   = true;
-// 	var XMLHttpRequest = require("xmlhttprequest").XMLHttpRequest;
-// 	var request = new XMLHttpRequest();
+	var XMLHttpRequest = require("xmlhttprequest").XMLHttpRequest;
+	var request = new XMLHttpRequest();
 
 // 	request.onload = function() {
 // 		var status = request.status;
@@ -121,14 +121,14 @@ app.post('/post', function(req, res){
 	// if(origin) 						{ validations.incompleteParams(origin) }
 	// else if(destination) 	{ validations.incompleteParams(destination) }
 	// else if(airline) 			{ validations.incompleteParams(airline) }
-	// else									{ getflightData(origin, destination, departureDate, airline) }
+	// else									  { getflightData(origin, destination, departureDate, airline) }
 
-	var r = ' origin: ' + origin 
+	var msg = ' origin: ' + origin 
 				+ ' destination: ' + destination 
 				+ ' departure date: ' + departureDate 
 				+ ' arrival date: ' + returnDate;
 
-	msg = "This was your request:" + r // + "These are your options:" + flights;
+	// msg = "This was your request:" + r + "These are your options:" + flights;
 
   var body = {
     response_type: "in_channel",

@@ -27,7 +27,6 @@ var airline				= null;
 
 
 
-
 var validations = {
 	incompleteParams: function(fail) {
 		return msg = 'There was an error. Please input correct ' + fail + '.'
@@ -61,7 +60,6 @@ var conversion = {
 };
 
 
-//===================================================================================
 var flightData = {
 	findDepartures: function (data) {
 		for (var i = 0; i < data.legs.length; i++) {
@@ -75,13 +73,13 @@ var flightData = {
 									});
 			};	
 	},
-	sortFlights: function(data) {
-		
+	sortFlights: function(a,b) {
+		return a.timeEpochSec - b.timeEpochSec;
 	}
 
 }
 
-
+//===================================================================================
 //===================================================================================
 
 
@@ -115,7 +113,8 @@ app.post('/post', function(req, res){
 		console.log("status ", status);
 		if(status == 200) { 
 			flightData.findDepartures(data); 
-				msg = "these are flights: " + flights[0].flightNumber;
+			flights.sort(flightData.sortFlights);
+			msg = "these are flights: " + flights[0].flightNumber;
 
 	  var body = {
 	    response_type: "in_channel",

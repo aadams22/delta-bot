@@ -23,6 +23,7 @@ var origin			  = null;
 var destination   = null;
 var departureDate = null;
 var airline				= null;
+var body 					= null;
 
 
 
@@ -75,6 +76,15 @@ var flightData = {
 	},
 	sortFlights: function(a,b) {
 		return a.timeEpochSec - b.timeEpochSec;
+	},
+	printF: function(f) {
+		for (var i = 0; i < f.length; i++) {
+			"Flight Number: " + f[i].flightNumber 
+			+ ", Departure: " + f[i].departure
+			+ ", Arrival: "   + f[i].arrival
+			+ ", Arline: "		+ f[i].arrival
+			+ ", Stops: "			+ f[i].stops
+		};
 	}
 
 }
@@ -109,17 +119,26 @@ app.post('/post', function(req, res){
 	
 	request.onload = function() {
 		var status = request.status;
-		var data = JSON.parse(request.responseText);
-		console.log("status ", status);
+		var data 	 = JSON.parse(request.responseText);
+
 		if(status == 200) { 
 			flightData.findDepartures(data); 
-			flights.sort(flightData.sortFlights);
-			msg = "these are flights: " + flights[0].flightNumber;
+			var sorted = flights.sort(flightData.sortFlights);
+			msg  = "these are flights: " + flights[0].flightNumber;
 
-	  var body = {
-	    response_type: "in_channel",
-	    text: msg 
-	  };
+		  body = {
+		    response_type: "in_channel",
+		    text: flightData.printF(sorted) 
+		  };
+
+  		res.send(body);
+		}else {
+
+			validations.incompleteParams("flight info again.")
+			body = {
+		    response_type: "in_channel",
+		    text: msg 
+	  	};
 
   		res.send(body);
 		}

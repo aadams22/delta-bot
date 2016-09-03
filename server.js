@@ -24,13 +24,6 @@ var airline				= null;
 var today 				= new Date();
 var currentYear   = today.getFullYear();
 
-// function FlightSearch() {
-// 	this.origin = "";
-// 	this.destination = "";
-// 	this.departureDate = "";
-// 	this.returnDate = "";
-// 	this.airline = "";
-// };
 
 
 var validations = {
@@ -69,6 +62,52 @@ var conversion = {
 	}
 };
 
+function findDepartures(data) {
+	for (var i = 0; i < data.legs.length; i++) {
+		console.log("========FLIGHT " + i + "========");
+		// console.log(data.legs[i].legId);
+		console.log(data.legs[i].segments[0].departureTime);
+		console.log(data.legs[i].segments[0].arrivalTime);
+		console.log(data.legs[i].segments[0].airlineName);
+		console.log(data.legs[i].segments[0].flightNumber);
+		console.log(data.legs[i].segments[0].stops);
+	};
+}
+
+
+function getflightData(d) {
+
+	var url     = null;
+	var method  = 'GET';
+	var async   = true;
+	var XMLHttpRequest = require("xmlhttprequest").XMLHttpRequest;
+	var request = new XMLHttpRequest();
+
+
+	if(d.returnDate) {
+		url = "http://terminal2.expedia.com/x/mflights/search?departureAirport=LAX&arrivalAirport=ORD&departureDate=2016-10-22&apikey=" + process.env.FLIGHTBOT_EXPEDIA_API_KEY;
+	}else {
+		url = "http://terminal2.expedia.com/x/mflights/search?departureAirport=" + d.origin + "&arrivalAirport=" + d.destination + "&departureDate=" + d.departureDate + "&apikey=" + process.env.FLIGHTBOT_EXPEDIA_API_KEY;
+
+	}
+
+	request.onload = function() {
+		var status = request.status;
+		var data = JSON.parse(request.responseText);
+		console.log("status ", status);
+		console.log("data", data);
+		findDepartures(data);
+	};
+
+	request.open(method, url, async);
+	request.setRequestHeader("Content-Type", "json;");
+	request.send();
+}
+
+
+
+
+
 //Sends to deployed view to make sure it's up and running! 
 app.get('/', function(req, res){
   res.send("Huzzah! I still work! Now let's have some tea.");
@@ -92,7 +131,10 @@ app.post('/post', function(req, res){
 
 
 
-	msg = 'origin: ' + origin + '. destination: ' + destination + ' departure date: ' + departureDate + ' arrival date: ' + returnDate;
+	msg = 'origin: ' + origin 
+				+ '. destination: ' + destination 
+				+ ' departure date: ' + departureDate 
+				+ ' arrival date: ' + returnDate;
 
   var body = {
     response_type: "in_channel",

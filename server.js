@@ -26,37 +26,37 @@ var currentYear   = today.getFullYear();
 
 
 
-// var validations = {
-// 	incompleteParams: function(fail) {
-// 		return msg = 'There was an error. Please input correct ' + fail + '.'
-// 	},
-// 	isDateValid: function(d) {
-// 		if(d < today) { return validations.incompleteParams(d) }
-// 	}
-// };
+var validations = {
+	incompleteParams: function(fail) {
+		return msg = 'There was an error. Please input correct ' + fail + '.'
+	},
+	isDateValid: function(d) {
+		if(d < today) { return validations.incompleteParams(d) }
+	}
+};
 
 
-// var conversion = {
-// 	convertDate: function(date) {
-// 		//checks if the date is in place 1 or 2 of the date
-// 		if (!isNaN(date.split(/[ ]+/)[0])) {  
-// 			return months.indexOf(date.split(/[ ]+/)[0] + 1)
-// 		}else if(!isNaN(date.split(/[ ]+/)[1])) {
-// 			return months.indexOf(date.split(/[ ]+/)[1] + 1)
-// 		}
+var conversion = {
+	convertDate: function(date) {
+		//checks if the date is in place 1 or 2 of the date
+		if (!isNaN(date.split(/[ ]+/)[0])) {  
+			return months.indexOf(date.split(/[ ]+/)[0] + 1)
+		}else if(!isNaN(date.split(/[ ]+/)[1])) {
+			return months.indexOf(date.split(/[ ]+/)[1] + 1)
+		}
 
-// 	},
-// 	convertCity: function(city) {
-// 		//runs a backbone query on the airport-codes module to find the IATA for user's input city
-// 			return airports.findWhere({ 'city' : city }).get('iata'); 
-// 	},
-// 	addYear: function(date){
-// 		console.log('this is split date: ', date.split(''));
-// 		if(!date.split('').length == 5) { 
-// 			return currentYear + '-' + date 
-// 		};
-// 	}
-// };
+	},
+	convertCity: function(city) {
+		//runs a backbone query on the airport-codes module to find the IATA for user's input city
+			return airports.findWhere({ 'city' : city }).get('iata'); 
+	},
+	addYear: function(date){
+		console.log('this is split date: ', date.split(''));
+		if(!date.split('').length == 5) { 
+			return currentYear + '-' + date 
+		};
+	}
+};
 
 
 //===================================================================================
@@ -87,9 +87,7 @@ function getflightData() {
 	request.onload = function() {
 		var status = request.status;
 		var data = JSON.parse(request.responseText);
-		console.log("status ", status);
-		console.log("data", data);
-		findDepartures(data);
+		return findDepartures(data);
 	};
 
 	request.open(method, url, async);
@@ -130,8 +128,8 @@ app.post('/post', function(req, res){
 	// 			+ ' arrival date: ' + returnDate;
 
 	// msg = "This was your request:" + r + "These are your options:" + flights;
-
-	msg = "hi"
+	getflightData();
+	msg = "these are flights: " + flights;
 
   var body = {
     response_type: "in_channel",

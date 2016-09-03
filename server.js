@@ -109,11 +109,11 @@ app.get('/', function(req, res){
 
 //need to find a solution for cities with 2 words that include a white space
 app.post('/post', function(req, res){
-	userParams    = req.body.text.split(/[ ]+/);
-	origin 				= conversion.convertCity(userParams[0].trim());
-	destination 	= conversion.convertCity(userParams[1].trim());
-	departureDate = userParams[2].trim();
-	airline				= userParams[3].trim();
+	// userParams    = req.body.text.split(/[ ]+/);
+	origin 				= conversion.convertCity(req.body.text.split(/[ ]+/)[0].trim());
+	destination 	= conversion.convertCity(req.body.text.split(/[ ]+/)[1].trim());
+	departureDate = req.body.text.split(/[ ]+/)[2].trim();
+	airline				= req.body.text.split(/[ ]+/)[3].trim();
 	
 
 

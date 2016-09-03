@@ -74,26 +74,6 @@ function findDepartures(data) {
 	return flights;
 }
 
-
-function getflightData() {
-	var url     = "http://terminal2.expedia.com/x/mflights/search?departureAirport=LAX&arrivalAirport=ORD&departureDate=2016-10-22&apikey=" + process.env.FLIGHTBOT_EXPEDIA_API_KEY;
-
-	// var url     = "http://terminal2.expedia.com/x/mflights/search?departureAirport=" + origin + "&arrivalAirport=" + destination + "&departureDate=" + departureDate + "&airlineName=" + airline + "&apikey=" + process.env.FLIGHTBOT_EXPEDIA_API_KEY;
-	var method  = 'GET';
-	var async   = true;
-	var XMLHttpRequest = require("xmlhttprequest").XMLHttpRequest;
-	var request = new XMLHttpRequest();
-
-	request.onload = function() {
-		var status = request.status;
-		var data = JSON.parse(request.responseText);
-		return findDepartures(data);
-	};
-
-	request.open(method, url, async);
-	request.setRequestHeader("Content-Type", "json;");
-	request.send();
-}
 //===================================================================================
 
 
@@ -122,13 +102,36 @@ app.post('/post', function(req, res){
 	// else if(airline) 			{ validations.incompleteParams(airline) }
 	// else									  { getflightData(origin, destination, departureDate, airline) }
 
+
+	var url     = "http://terminal2.expedia.com/x/mflights/search?departureAirport=LAX&arrivalAirport=ORD&departureDate=2016-10-22&apikey=" + process.env.FLIGHTBOT_EXPEDIA_API_KEY;
+
+	// var url     = "http://terminal2.expedia.com/x/mflights/search?departureAirport=" + origin + "&arrivalAirport=" + destination + "&departureDate=" + departureDate + "&airlineName=" + airline + "&apikey=" + process.env.FLIGHTBOT_EXPEDIA_API_KEY;
+	var method  = 'GET';
+	var async   = true;
+	var XMLHttpRequest = require("xmlhttprequest").XMLHttpRequest;
+	var request = new XMLHttpRequest();
+
+	request.onload = function() {
+		var status = request.status;
+		var data = JSON.parse(request.responseText);
+		return findDepartures(data);
+	};
+
+	request.open(method, url, async);
+	request.setRequestHeader("Content-Type", "json;");
+	request.send();
+
+
+
+
+
 	// msg = ' origin: ' + origin 
 	// 			+ ' destination: ' + destination 
 	// 			+ ' departure date: ' + departureDate 
 	// 			+ ' arrival date: ' + returnDate;
 
 	// msg = "This was your request:" + r + "These are your options:" + flights;
-	getflightData();
+
 	msg = "these are flights: " + flights[0];
 
   var body = {

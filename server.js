@@ -62,42 +62,44 @@ var conversion = {
 	}
 };
 
-function findDepartures(data) {
-	for (var i = 0; i < data.legs.length; i++) {
-		flights.push({
-									"flight number": data.legs[i].segments[0].flightNumber,
-									"departure": data.legs[i].segments[0].departureTime,
-									"arrival": data.legs[i].segments[0].arrivalTime,
-									"airline": data.legs[i].segments[0].airlineName,
-									"stops": data.legs[i].segments[0].stops
-								});
 
-	};
-	return flights;
-}
+//===================================================================================
+// function findDepartures(data) {
+// 	for (var i = 0; i < data.legs.length; i++) {
+// 		flights.push({
+// 									"flight number": data.legs[i].segments[0].flightNumber,
+// 									"departure": data.legs[i].segments[0].departureTime,
+// 									"arrival": data.legs[i].segments[0].arrivalTime,
+// 									"airline": data.legs[i].segments[0].airlineName,
+// 									"stops": data.legs[i].segments[0].stops
+// 								});
+
+// 	};
+// 	return flights;
+// }
 
 
-function getflightData(origin, destination, departureDate, airline) {
+// function getflightData(origin, destination, departureDate, airline) {
 
-	var url     = "http://terminal2.expedia.com/x/mflights/search?departureAirport=" + origin + "&arrivalAirport=" + destination + "&departureDate=" + departureDate + "&airlineName=" + airline + "&apikey=" + process.env.FLIGHTBOT_EXPEDIA_API_KEY;
-	var method  = 'GET';
-	var async   = true;
-	var XMLHttpRequest = require("xmlhttprequest").XMLHttpRequest;
-	var request = new XMLHttpRequest();
+// 	var url     = "http://terminal2.expedia.com/x/mflights/search?departureAirport=" + origin + "&arrivalAirport=" + destination + "&departureDate=" + departureDate + "&airlineName=" + airline + "&apikey=" + process.env.FLIGHTBOT_EXPEDIA_API_KEY;
+// 	var method  = 'GET';
+// 	var async   = true;
+// 	var XMLHttpRequest = require("xmlhttprequest").XMLHttpRequest;
+// 	var request = new XMLHttpRequest();
 
-	request.onload = function() {
-		var status = request.status;
-		var data = JSON.parse(request.responseText);
-		console.log("status ", status);
-		console.log("data", data);
-		findDepartures(data);
-	};
+// 	request.onload = function() {
+// 		var status = request.status;
+// 		var data = JSON.parse(request.responseText);
+// 		console.log("status ", status);
+// 		console.log("data", data);
+// 		findDepartures(data);
+// 	};
 
-	request.open(method, url, async);
-	request.setRequestHeader("Content-Type", "json;");
-	request.send();
-}
-
+// 	request.open(method, url, async);
+// 	request.setRequestHeader("Content-Type", "json;");
+// 	request.send();
+// }
+//===================================================================================
 
 
 

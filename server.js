@@ -13,16 +13,18 @@ app.set('port', (process.env.PORT || 8080));
 
 // /getflights [origin, destination, departureDate, airline]
 
-
+var XMLHttpRequest = require("xmlhttprequest").XMLHttpRequest;
+var today 				= new Date();
+var currentYear   = today.getFullYear();
+var flights				= [];
 var msg 			  	= null;
 var userParams    = null;
 var origin			  = null;
 var destination   = null;
 var departureDate = null;
 var airline				= null;
-var flights				= [];
-var today 				= new Date();
-var currentYear   = today.getFullYear();
+
+
 
 
 
@@ -60,24 +62,24 @@ var conversion = {
 
 
 //===================================================================================
-function findDepartures(data) {
-	for (var i = 0; i < data.legs.length; i++) {
-		flights.push({
-									"flightNumber": data.legs[i].segments[0].flightNumber,
-									"departure": data.legs[i].segments[0].departureTime,
-									"arrival": data.legs[i].segments[0].arrivalTime,
-									"airline": data.legs[i].segments[0].airlineName,
-									"stops": data.legs[i].segments[0].stops
-								});
-	};
-	
-};
+var flightData = {
+	findDepartures: function (data) {
+		for (var i = 0; i < data.legs.length; i++) {
+			flights.push({
+										"flightNumber": data.legs[i].segments[0].flightNumber,
+										"departure": data.legs[i].segments[0].departureTime,
+										"arrival": data.legs[i].segments[0].arrivalTime,
+										"airline": data.legs[i].segments[0].airlineName,
+										"stops": data.legs[i].segments[0].stops,
+										"timeEpochSec": data.legs[i].segments[0].departureTimeEpochSeconds
+									});
+			};	
+	},
+	sortFlights: function(data) {
+		
+	}
 
-
-
-
-	var XMLHttpRequest = require("xmlhttprequest").XMLHttpRequest;
-
+}
 
 
 //===================================================================================
@@ -112,7 +114,7 @@ app.post('/post', function(req, res){
 		var data = JSON.parse(request.responseText);
 		console.log("status ", status);
 		if(status == 200) { 
-			findDepartures(data); 
+			flightData.findDepartures(data); 
 				msg = "these are flights: " + flights[0].flightNumber;
 
 	  var body = {
@@ -128,11 +130,6 @@ app.post('/post', function(req, res){
 	request.open(method, url, async);
 	request.setRequestHeader("Content-Type", "json;");
   request.send();
-
-
-
-
-
 
 });
 

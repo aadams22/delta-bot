@@ -77,7 +77,7 @@ function findDepartures(data) {
 }
 
 
-function getflights() {
+
 	var url     = "http://terminal2.expedia.com/x/mflights/search?departureAirport=LAX&arrivalAirport=ORD&departureDate=2016-10-22&apikey=" + process.env.FLIGHTBOT_EXPEDIA_API_KEY;
 	var method  = 'GET';
 	var async   = true;
@@ -93,8 +93,8 @@ function getflights() {
 
 	request.open(method, url, async);
 	request.setRequestHeader("Content-Type", "json;");
-	request.send();
-}
+	
+
 
 
 //===================================================================================
@@ -119,14 +119,13 @@ app.post('/post', function(req, res){
 
 	// var url     = "http://terminal2.expedia.com/x/mflights/search?departureAirport=" + origin + "&arrivalAirport=" + destination + "&departureDate=" + departureDate + "&airlineName=" + airline + "&apikey=" + process.env.FLIGHTBOT_EXPEDIA_API_KEY;
 
-	getflights();
-	 
+
 	// r = ' origin: ' + origin 
 	// 			+ ' destination: ' + destination 
 	// 			+ ' departure date: ' + departureDate 
 	// 			+ ' arrival date: ' + returnDate;
 
-
+	request.send();
 	msg = "these are flights: " + flights[0].flightNumber;
 
   var body = {

@@ -124,11 +124,11 @@ app.post('/post', function(req, res){
 		if(status == 200) { 
 			flightData.findDepartures(data); 
 			var sorted = flights.sort(flightData.sortFlights);
-			msg  = "these are flights: " + flights[0].flightNumber;
-
+			
+			msg = flightData.printF(sorted) 
 		  body = {
 		    response_type: "in_channel",
-		    text: flightData.printF(sorted) 
+		    text: msg
 		  };
 
   		res.send(body);

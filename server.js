@@ -77,29 +77,6 @@ function findDepartures(data) {
 }
 
 //===================================================================================
-	var url     = "http://terminal2.expedia.com/x/mflights/search?departureAirport=LAX&arrivalAirport=ORD&departureDate=2016-10-22&apikey=" + process.env.FLIGHTBOT_EXPEDIA_API_KEY;
-	var method  = 'GET';
-	var async   = true;
-	var XMLHttpRequest = require("xmlhttprequest").XMLHttpRequest;
-	var request = new XMLHttpRequest();
-
-	request.onload = function() {
-		var status = request.status;
-		var data = JSON.parse(request.responseText);
-		console.log("status ", status);
-		findDepartures(data);
-	};
-
-	request.open(method, url, async);
-	request.setRequestHeader("Content-Type", "json;");
-	request.send();
-
-
-
-//Sends to deployed view to make sure it's up and running! 
-app.get('/', function(req, res){
-  res.send("Huzzah! I still work! Now let's have some tea.");
-});
 
 //need to find a solution for cities with 2 words that include a white space
 app.post('/post', function(req, res){
@@ -121,6 +98,22 @@ app.post('/post', function(req, res){
 
 	// var url     = "http://terminal2.expedia.com/x/mflights/search?departureAirport=" + origin + "&arrivalAirport=" + destination + "&departureDate=" + departureDate + "&airlineName=" + airline + "&apikey=" + process.env.FLIGHTBOT_EXPEDIA_API_KEY;
 
+	var url     = "http://terminal2.expedia.com/x/mflights/search?departureAirport=LAX&arrivalAirport=ORD&departureDate=2016-10-22&apikey=" + process.env.FLIGHTBOT_EXPEDIA_API_KEY;
+	var method  = 'GET';
+	var async   = true;
+	var XMLHttpRequest = require("xmlhttprequest").XMLHttpRequest;
+	var request = new XMLHttpRequest();
+
+	request.onload = function() {
+		var status = request.status;
+		var data = JSON.parse(request.responseText);
+		console.log("status ", status);
+		findDepartures(data);
+	};
+
+	request.open(method, url, async);
+	request.setRequestHeader("Content-Type", "json;");
+	request.send();
 
 
 
@@ -129,7 +122,6 @@ app.post('/post', function(req, res){
 	// 			+ ' departure date: ' + departureDate 
 	// 			+ ' arrival date: ' + returnDate;
 
-	// msg = "This was your request:" + r + "These are your options:" + flights;
 
 	msg = "these are flights: " + flights[0].flightNumber;
 
@@ -142,6 +134,11 @@ app.post('/post', function(req, res){
 
 });
 
+
+//Sends to deployed view to make sure it's up and running! 
+app.get('/', function(req, res){
+  res.send("Huzzah! I still work! Now let's have some tea.");
+});
 
 app.listen(app.get('port'), function() {
   console.log('Node app is running on port', app.get('port'));

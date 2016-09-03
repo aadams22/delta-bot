@@ -132,7 +132,7 @@ app.post('/post', function(req, res){
 			for (var i = 0; i < s.length; i++) {
 				"Flight: " + s[i].flightNumber + " Departing on " + s[i].departure + " Arriving at" + s[i].arrival + " on" + s[i].airline
 			};
-			msg = a.join()[0];
+			msg = a.join();
 
 		  body = {
 		    response_type: "in_channel",

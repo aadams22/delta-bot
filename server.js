@@ -132,11 +132,11 @@ app.post('/post', function(req, res){
 			for (var i = 0; i < s.length; i++) {
 				"Flight: " + s[i].flightNumber + " Departing on " + s[i].departure + " Arriving at" + s[i].arrival + " on" + s[i].airline
 			};
-			// msg = a.join();
+			a.join("");
 
 		  body = {
 		    response_type: "in_channel",
-		    text: a.join();
+		    text: 
 		  };
 
   		res.send(body);

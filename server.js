@@ -77,13 +77,12 @@ function findDepartures(data) {
 
 
 	var XMLHttpRequest = require("xmlhttprequest").XMLHttpRequest;
-	var request = new XMLHttpRequest();
 
 
 
 //===================================================================================
 
-//need to find a solution for cities with 2 words that include a white space
+
 app.post('/post', function(req, res){
 	// userParams    = req.body.text.split(/[ ]+/);
 	// origin 				= conversion.convertCity(req.body.text.split(/[ ]+/)[0]);
@@ -101,8 +100,9 @@ app.post('/post', function(req, res){
 	// else if(airline) 			{ validations.incompleteParams(airline) }
 	// else									  { getflightData(origin, destination, departureDate, airline) }
 
-	// var url     = "http://terminal2.expedia.com/x/mflights/search?departureAirport=" + origin + "&arrivalAirport=" + destination + "&departureDate=" + departureDate + "&airlineName=" + airline + "&apikey=" + process.env.FLIGHTBOT_EXPEDIA_API_KEY;
 
+	var request = new XMLHttpRequest();
+	// var url     = "http://terminal2.expedia.com/x/mflights/search?departureAirport=" + origin + "&arrivalAirport=" + destination + "&departureDate=" + departureDate + "&airlineName=" + airline + "&apikey=" + process.env.FLIGHTBOT_EXPEDIA_API_KEY;
 	var url     = "http://terminal2.expedia.com/x/mflights/search?departureAirport=LAX&arrivalAirport=ORD&departureDate=2016-10-22&apikey=" + process.env.FLIGHTBOT_EXPEDIA_API_KEY;
 	var method  = 'GET';
 	var async   = true;

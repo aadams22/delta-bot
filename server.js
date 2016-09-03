@@ -128,18 +128,19 @@ app.post('/post', function(req, res){
 			var s = flights.sort(flightData.sortFlights);
 			// flightData.printF(sorted)
 
-			var a = [];
+
 			for (var i = 0; i < s.length; i++) {
-				"Flight: " + s[i].flightNumber + " Departing on " + s[i].departure + " Arriving at" + s[i].arrival + " on" + s[i].airline
+				body = {
+			    response_type: "in_channel",
+			    text: "Flight: " + s[i].flightNumber + " Departing on " + s[i].departure + " Arriving at" + s[i].arrival + " on" + s[i].airline
+
+			  };
+				res.send(body);
 			};
 
 
-		  body = {
-		    response_type: "in_channel",
-		    text: a.join("")
-		  };
 
-  		res.send(body);
+  		
 		}else {
 
 			validations.incompleteParams("flight info again.")

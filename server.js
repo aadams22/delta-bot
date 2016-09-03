@@ -76,6 +76,27 @@ function findDepartures(data) {
 	
 }
 
+
+function getflights() {
+	var url     = "http://terminal2.expedia.com/x/mflights/search?departureAirport=LAX&arrivalAirport=ORD&departureDate=2016-10-22&apikey=" + process.env.FLIGHTBOT_EXPEDIA_API_KEY;
+	var method  = 'GET';
+	var async   = true;
+	var XMLHttpRequest = require("xmlhttprequest").XMLHttpRequest;
+	var request = new XMLHttpRequest();
+
+	request.onload = function() {
+		var status = request.status;
+		var data = JSON.parse(request.responseText);
+		console.log("status ", status);
+		findDepartures(data);
+	};
+
+	request.open(method, url, async);
+	request.setRequestHeader("Content-Type", "json;");
+	request.send();
+}
+
+
 //===================================================================================
 
 //need to find a solution for cities with 2 words that include a white space
@@ -98,25 +119,8 @@ app.post('/post', function(req, res){
 
 	// var url     = "http://terminal2.expedia.com/x/mflights/search?departureAirport=" + origin + "&arrivalAirport=" + destination + "&departureDate=" + departureDate + "&airlineName=" + airline + "&apikey=" + process.env.FLIGHTBOT_EXPEDIA_API_KEY;
 
-	var url     = "http://terminal2.expedia.com/x/mflights/search?departureAirport=LAX&arrivalAirport=ORD&departureDate=2016-10-22&apikey=" + process.env.FLIGHTBOT_EXPEDIA_API_KEY;
-	var method  = 'GET';
-	var async   = true;
-	var XMLHttpRequest = require("xmlhttprequest").XMLHttpRequest;
-	var request = new XMLHttpRequest();
-
-	request.onload = function() {
-		var status = request.status;
-		var data = JSON.parse(request.responseText);
-		console.log("status ", status);
-		findDepartures(data);
-	};
-
-	request.open(method, url, async);
-	request.setRequestHeader("Content-Type", "json;");
-	request.send();
-
-
-
+	getflights();
+	 
 	// r = ' origin: ' + origin 
 	// 			+ ' destination: ' + destination 
 	// 			+ ' departure date: ' + departureDate 

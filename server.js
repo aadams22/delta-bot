@@ -48,11 +48,11 @@ var conversion = {
 	},
 	convertCity: function(city) {
 		//runs a backbone query on the airport-codes module to find the IATA for user's input city
-		if(airports.findWhere({ 'city' : city }).get('iata')) { 
+		// if(airports.findWhere({ 'city' : city }).get('iata')) { 
 			return airports.findWhere({ 'city' : city }).get('iata'); 
-		}else{ 
-			return validations.incompleteParams(city);
-		};
+		// }else{ 
+		// 	return validations.incompleteParams(city);
+		// };
 	},
 	addYear: function(date){
 		console.log('this is split date: ', date.split(''));

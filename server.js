@@ -102,10 +102,8 @@ app.post('/post', function(req, res){
 	// else if(airline) 			{ validations.incompleteParams(airline) }
 	// else									  { getflightData(origin, destination, departureDate, airline) }
 
-
-	var url     = "http://terminal2.expedia.com/x/mflights/search?departureAirport=LAX&arrivalAirport=ORD&departureDate=2016-10-22&apikey=" + process.env.FLIGHTBOT_EXPEDIA_API_KEY;
-
 	// var url     = "http://terminal2.expedia.com/x/mflights/search?departureAirport=" + origin + "&arrivalAirport=" + destination + "&departureDate=" + departureDate + "&airlineName=" + airline + "&apikey=" + process.env.FLIGHTBOT_EXPEDIA_API_KEY;
+	var url     = "http://terminal2.expedia.com/x/mflights/search?departureAirport=LAX&arrivalAirport=ORD&departureDate=2016-10-22&apikey=" + process.env.FLIGHTBOT_EXPEDIA_API_KEY;
 	var method  = 'GET';
 	var async   = true;
 	var XMLHttpRequest = require("xmlhttprequest").XMLHttpRequest;
@@ -123,9 +121,7 @@ app.post('/post', function(req, res){
 
 
 
-
-
-	// msg = ' origin: ' + origin 
+	// r = ' origin: ' + origin 
 	// 			+ ' destination: ' + destination 
 	// 			+ ' departure date: ' + departureDate 
 	// 			+ ' arrival date: ' + returnDate;

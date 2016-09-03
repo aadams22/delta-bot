@@ -111,7 +111,18 @@ app.post('/post', function(req, res){
 		var status = request.status;
 		var data = JSON.parse(request.responseText);
 		console.log("status ", status);
-		findDepartures(data);
+		if(status == 200) { 
+			findDepartures(data); 
+				msg = "these are flights: " + flights[0].flightNumber;
+
+	  var body = {
+	    response_type: "in_channel",
+	    text: msg 
+	  };
+
+  		res.send(body);
+		}
+		
 	};
 
 	request.open(method, url, async);
@@ -121,14 +132,7 @@ app.post('/post', function(req, res){
 
 
 
-	msg = "these are flights: " + flights[0].flightNumber;
 
-  var body = {
-    response_type: "in_channel",
-    text: msg 
-  };
-
-  res.send(body);
 
 });
 

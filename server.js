@@ -75,7 +75,7 @@ var flightData = {
 	printF: function(f) {
 		var a = [];
 		for (var i = 0; i < f.length; i++) {
-			if( arline == f[i].airline ) {
+			if( airline == f[i].airline ) {
 					a.push("Flight Number: " + f[i].flightNumber 
 								+ ", Departure: "  + f[i].departure
 								+ ", Arrival: "    + f[i].arrival

@@ -83,7 +83,7 @@ var flightData = {
 						+ ", Departure: "  + f[i].departure
 						+ ", Arrival: "    + f[i].arrival
 						+ ", Arline: "	   + f[i].airline
-						+ " .")
+						+ " . ")
 		};
 		return a.join("");
 	}
@@ -125,7 +125,7 @@ app.post('/post', function(req, res){
 
 				body = {
 								response_type: "in_channel",
-								text: flightData.printF(s)
+								text: "ORIGIN: " + origin + "DESTINATION: " + destination + "RESULTS: " + flightData.printF(s)
 								};
 
 				res.send(body);

@@ -137,11 +137,14 @@ app.post('/post', function(req, res){
 						+ ", Arrival: "   + s[i].arrival
 						+ ", Arline: "		+ s[i].arrival)
 			}
+
 		}
+
+		msg = a.join("");
 
 			body = {
 		    response_type: "in_channel",
-	   		text: a.join("")
+	   		text: msg
 
 		  };
 

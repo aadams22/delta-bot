@@ -27,7 +27,6 @@ var body 					= null;
 
 
 
-
 var validations = {
 	incompleteParams: function(fail) {
 		return msg = 'There was an error. Please input correct ' + fail + '.'
@@ -96,10 +95,10 @@ var flightData = {
 
 app.post('/post', function(req, res){
 	// userParams    = req.body.text.split(/[ ]+/);
-	// origin 				= conversion.convertCity(req.body.text.split(/[ ]+/)[0]);
-	// destination 	= conversion.convertCity(req.body.text.split(/[ ]+/)[1]);
-	// departureDate = req.body.text.split(/[ ]+/)[2];
-	// airline				= req.body.text.split(/[ ]+/)[3];
+	origin 				= conversion.convertCity(req.body.text.split(/[ ]+/)[0]);
+	destination 	= conversion.convertCity(req.body.text.split(/[ ]+/)[1]);
+	departureDate = req.body.text.split(/[ ]+/)[2];
+	airline				= req.body.text.split(/[ ]+/)[3];
 	
 
 
@@ -113,8 +112,8 @@ app.post('/post', function(req, res){
 
 
 	var request = new XMLHttpRequest();
-	// var url     = "http://terminal2.expedia.com/x/mflights/search?departureAirport=" + origin + "&arrivalAirport=" + destination + "&departureDate=" + departureDate + "&airlineName=" + airline + "&apikey=" + process.env.FLIGHTBOT_EXPEDIA_API_KEY;
-	var url     = "http://terminal2.expedia.com/x/mflights/search?departureAirport=MSP&arrivalAirport=DEN&departureDate=2016-09-27&apikey=" + process.env.FLIGHTBOT_EXPEDIA_API_KEY;
+	var url     = "http://terminal2.expedia.com/x/mflights/search?departureAirport=" + origin + "&arrivalAirport=" + destination + "&departureDate=" + departureDate + "&airlineName=" + airline + "&apikey=" + process.env.FLIGHTBOT_EXPEDIA_API_KEY;
+	// var url     = "http://terminal2.expedia.com/x/mflights/search?departureAirport=MSP&arrivalAirport=DEN&departureDate=2016-09-27&apikey=" + process.env.FLIGHTBOT_EXPEDIA_API_KEY;
 	var method  = 'GET';
 	var async   = true;
 	
@@ -125,18 +124,12 @@ app.post('/post', function(req, res){
 		if(status == 200) { 
 			flightData.findDepartures(data); 
 			var s = flights.sort(flightData.sortFlights);
-
-
-			msg = flightData.printF(s);
-
-
+			msg   = flightData.printF(s);
 
 			body = {
 		    response_type: "in_channel",
 	   		text: msg
-
 		  };
-
 
 			res.send(body);
   		

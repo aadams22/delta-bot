@@ -127,20 +127,9 @@ app.post('/post', function(req, res){
 			var s = flights.sort(flightData.sortFlights);
 
 
-			// msg = flightData.printF(sorted)
+			msg = flightData.printF(s);
 
 
-		var a = [];
-		for (var i = 0; s < f.length; i++) {
-			a.push("Flight Number: " + s[i].flightNumber 
-						+ ", Departure: " + s[i].departure
-						+ ", Arrival: "   + s[i].arrival
-						+ ", Arline: "		+ s[i].arrival)
-			}
-
-		}
-
-		msg = a.join("");
 
 			body = {
 		    response_type: "in_channel",
@@ -150,7 +139,6 @@ app.post('/post', function(req, res){
 
 
 			res.send(body);
-
   		
 		}else {
 

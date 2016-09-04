@@ -22,13 +22,16 @@ var origin			  = null;
 var destination   = null;
 var departureDate = null;
 var airline				= null;
-var body 					= null;
-
+var body 					= {
+			    					response_type: "in_channel",
+			    					text: msg 
+		  							};
 
 
 var validations = {
 	incompleteParams: function(fail) {
-		return msg = 'There was an error. Please input correct ' + fail + '.'
+		msg = 'There was an error. Please input correct ' + fail + '.'
+	  res.send(body);
 	},
 	isDateValid: function(d) {
 		if(d < today) { return validations.incompleteParams(d) }
@@ -123,22 +126,12 @@ app.post('/post', function(req, res){
 				var s = flights.sort(flightData.sortFlights);
 				msg   = flightData.printF(s);
 
-				body = {
-			    response_type: "in_channel",
-		   		text: msg
-			  };
-
 				res.send(body);
 	  		
 			}else {
 
 				validations.incompleteParams("flight info again.")
-				body = {
-			    response_type: "in_channel",
-			    text: msg 
-		  	};
 
-	  		res.send(body);
 			}
 			
 		};

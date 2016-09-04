@@ -17,7 +17,6 @@ var XMLHttpRequest = require("xmlhttprequest").XMLHttpRequest;
 var today 				= new Date();
 var currentYear   = today.getFullYear();
 var flights				= [];
-var msg 			  	= null;
 var origin			  = null;
 var destination   = null;
 var departureDate = null;
@@ -26,12 +25,7 @@ var body          = null;
 
 var validations = {
 	incompleteParams: function(fail) {
-		body = {
-						response_type: "in_channel",
-						text: 'There was an error. Please input correct ' + fail + '.' 
-						};
-
-	  res.send(body);
+			return 'There was an error. Please input correct ' + fail + '.' 
 	},
 	isDateValid: function(d) {
 		if(d < today) { return validations.incompleteParams(d) }
@@ -125,7 +119,6 @@ app.post('/post', function(req, res){
 				flightData.findDepartures(data); 
 				var s = flights.sort(flightData.sortFlights);
 
-
 				body = {
 								response_type: "in_channel",
 								text: flightData.printF(s)
@@ -133,10 +126,13 @@ app.post('/post', function(req, res){
 
 				res.send(body);
 	  		
-			}else {
+			}else { 
+				body = {
+								response_type: "in_channel",
+								text: validations.incompleteParams("flight info again.") 
+								};
 
-				validations.incompleteParams("flight info again.")
-
+				res.send(body);
 			}
 			
 		};

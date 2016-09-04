@@ -25,7 +25,7 @@ var body          = null;
 
 var validations = {
 	incompleteParams: function(fail) {
-			return 'There was an error. Please input correct ' + fail + '.' 
+			return 'There was an error. Please input correct ' + fail + '.'; 
 	},
 	isDateValid: function(d) {
 		if(d < today) { return validations.incompleteParams(d) }
@@ -75,11 +75,13 @@ var flightData = {
 	printF: function(f) {
 		var a = [];
 		for (var i = 0; i < f.length; i++) {
-			a.push("Flight Number: " + f[i].flightNumber 
-						+ ", Departure: "  + f[i].departure
-						+ ", Arrival: "    + f[i].arrival
-						+ ", Arline: "	   + f[i].airlineName
-						+ " .")
+			if( arline == f[i].airline ) {
+					a.push("Flight Number: " + f[i].flightNumber 
+								+ ", Departure: "  + f[i].departure
+								+ ", Arrival: "    + f[i].arrival
+								+ ", Arline: "	   + f[i].airline
+								+ " .")
+			}
 		};
 		return a.join("");
 	}

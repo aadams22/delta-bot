@@ -1,7 +1,7 @@
-var express   = require('express');
-var app       = express();
-var airports  = require('airport-codes');
-
+var express  		   = require('express');
+var app         	 = express();
+var airports  		 = require('airport-codes');
+var XMLHttpRequest = require("xmlhttprequest").XMLHttpRequest;
 
 
 var bodyParser = require('body-parser');
@@ -13,15 +13,17 @@ app.set('port', (process.env.PORT || 8080));
 
 // /getflights [origin, destination, departureDate, airline]
 
-var XMLHttpRequest = require("xmlhttprequest").XMLHttpRequest;
-var today 				= new Date();
-var currentYear   = today.getFullYear();
-var flights				= [];
-var origin			  = null;
-var destination   = null;
-var departureDate = null;
-var airline				= null;
-var body          = null;
+
+var origin			   = null;
+var destination    = null;
+var departureDate  = null;
+var airline				 = null;
+var body           = null;
+var flights				 = [];
+var today 				 = new Date();
+var currentYear    = today.getFullYear();
+
+
 
 var validations = {
 	incompleteParams: function(fail) {
@@ -59,15 +61,17 @@ var conversion = {
 var flightData = {
 	findDepartures: function (data) {
 		for (var i = 0; i < data.legs.length; i++) {
-			flights.push({
-										"flightNumber": data.legs[i].segments[0].flightNumber,
-										"departure": data.legs[i].segments[0].departureTime,
-										"arrival": data.legs[i].segments[0].arrivalTime,
-										"airline": data.legs[i].segments[0].airlineName,
-										"stops": data.legs[i].segments[0].stops,
-										"timeEpochSec": data.legs[i].segments[0].departureTimeEpochSeconds
-									});
-			};	
+			if( airline == data.legs[i].segments[0].airlineName ) {
+				flights.push({
+											"flightNumber": data.legs[i].segments[0].flightNumber,
+											"departure": data.legs[i].segments[0].departureTime,
+											"arrival": data.legs[i].segments[0].arrivalTime,
+											"airline": data.legs[i].segments[0].airlineName,
+											"stops": data.legs[i].segments[0].stops,
+											"timeEpochSec": data.legs[i].segments[0].departureTimeEpochSeconds
+										});
+			}
+		};	
 	},
 	sortFlights: function(a,b) {
 		return a.timeEpochSec - b.timeEpochSec;
@@ -75,13 +79,11 @@ var flightData = {
 	printF: function(f) {
 		var a = [];
 		for (var i = 0; i < f.length; i++) {
-			if( airline == f[i].airline ) {
-					a.push("Flight Number: " + f[i].flightNumber 
-								+ ", Departure: "  + f[i].departure
-								+ ", Arrival: "    + f[i].arrival
-								+ ", Arline: "	   + f[i].airline
-								+ " .")
-			}
+			a.push("Flight Number: " + f[i].flightNumber 
+						+ ", Departure: "  + f[i].departure
+						+ ", Arrival: "    + f[i].arrival
+						+ ", Arline: "	   + f[i].airline
+						+ " .")
 		};
 		return a.join("");
 	}

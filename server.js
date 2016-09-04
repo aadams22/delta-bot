@@ -82,7 +82,7 @@ var flightData = {
 			a.push("Flight Number: " + f[i].flightNumber 
 						+ ", Departure: " + f[i].departure
 						+ ", Arrival: "   + f[i].arrival
-						+ ", Arline: "		+ f[i].arrival)
+						+ ", Arline: "		+ f[i].airlineName)
 		};
 		return a.join("");
 	}

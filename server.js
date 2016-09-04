@@ -115,7 +115,7 @@ app.post('/post', function(req, res){
 
 	var request = new XMLHttpRequest();
 	// var url     = "http://terminal2.expedia.com/x/mflights/search?departureAirport=" + origin + "&arrivalAirport=" + destination + "&departureDate=" + departureDate + "&airlineName=" + airline + "&apikey=" + process.env.FLIGHTBOT_EXPEDIA_API_KEY;
-	var url     = "http://terminal2.expedia.com/x/mflights/search?departureAirport=LAX&arrivalAirport=ORD&departureDate=2016-10-22&apikey=" + process.env.FLIGHTBOT_EXPEDIA_API_KEY;
+	var url     = "http://terminal2.expedia.com/x/mflights/search?departureAirport=MSP&arrivalAirport=DEN&departureDate=2016-09-27&apikey=" + process.env.FLIGHTBOT_EXPEDIA_API_KEY;
 	var method  = 'GET';
 	var async   = true;
 	
@@ -132,7 +132,7 @@ app.post('/post', function(req, res){
 			for (var i = 0; i < s.length; i++) {
 				body = {
 			    response_type: "in_channel",
-			    text: "Flight: " + s[i].flightNumber + " Departing on " + s[i].departure + " Arriving at" + s[i].arrival + " on" + s[i].airline
+			    text: "Flight: " + s[i].flightNumber + " Departing on " + s[i].departure + " Arriving at" + s[i].arrival + " on " + s[i].airline
 
 			  };
 				res.send(body);

@@ -83,7 +83,7 @@ var flightData = {
 			a.push("Flight Number: " + f[i].flightNumber 
 						+ ", Departure: " + f[i].departure
 						+ ", Arrival: "   + f[i].arrival
-						+ ", Arline: "		+ f[i].arrival
+						+ ", Arline: "		+ f[i].arrival)
 		};
 		return a.join("");
 	}
@@ -128,13 +128,7 @@ app.post('/post', function(req, res){
 			
 
 
-			// for (var i = 0; i < s.length; i++) {
-			// 	body = {
-			//     response_type: "in_channel",
-			//     text: "Flight: " + s[i].flightNumber + " Departing on " + s[i].departure + " Arriving at" + s[i].arrival + " on " + s[i].airline
 
-			//   };
-			// };
 
 			msg = flightData.printF(sorted)
 

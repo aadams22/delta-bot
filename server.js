@@ -69,7 +69,8 @@ var flightData = {
 											"airline": data.legs[i].segments[0].airlineName,
 											"stops": data.legs[i].segments[0].stops,
 											"timeEpochSec": data.legs[i].segments[0].departureTimeEpochSeconds,
-											"departureAirportCode": data.legs[i].segments[0].departureAirportCode
+											"departureAirportCode": data.legs[i].segments[0].departureAirportCode,
+											"arrivalAirportCode": data.legs[i].segments[0].arrivalAirportCode
 										});
 			}
 		};	
@@ -85,7 +86,8 @@ var flightData = {
 						+ ", Arrival: "    + f[i].arrival
 						+ ", Arline: "	   + f[i].airline
 						+ ", Departure Airport: "	   + f[i].departureAirportCode
-						+ " . ")
+						+ ", Arrival Airport: "	     + f[i].arrivalAirportCode
+						+ " . ")		
 		};
 		return a.join("");
 	}

@@ -68,7 +68,8 @@ var flightData = {
 											"arrival": data.legs[i].segments[0].arrivalTime,
 											"airline": data.legs[i].segments[0].airlineName,
 											"stops": data.legs[i].segments[0].stops,
-											"timeEpochSec": data.legs[i].segments[0].departureTimeEpochSeconds
+											"timeEpochSec": data.legs[i].segments[0].departureTimeEpochSeconds,
+											"departureAirportCode": data.legs[i].segments[0].departureAirportCode
 										});
 			}
 		};	
@@ -83,6 +84,7 @@ var flightData = {
 						+ ", Departure: "  + f[i].departure
 						+ ", Arrival: "    + f[i].arrival
 						+ ", Arline: "	   + f[i].airline
+						+ ", Departure Airport: "	   + f[i].departureAirportCode
 						+ " . ")
 		};
 		return a.join("");
@@ -125,7 +127,7 @@ app.post('/post', function(req, res){
 
 				body = {
 								response_type: "in_channel",
-								text: "ORIGIN: " + origin + "DESTINATION: " + destination + "RESULTS: " + flightData.printF(s)
+								text: "ORIGIN: " + origin + ". DESTINATION: " + destination + ". RESULTS: " + flightData.printF(s)
 								};
 
 				res.send(body);

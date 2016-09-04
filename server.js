@@ -85,7 +85,7 @@ var flightData = {
 						+ ", Arrival: "   + f[i].arrival
 						+ ", Arline: "		+ f[i].arrival
 		};
-		return a.join();
+		return a.join("");
 	}
 
 }
@@ -141,13 +141,12 @@ app.post('/post', function(req, res){
 
 			body = {
 		    response_type: "in_channel",
-	   		 text: msg
+	   		text: msg
 
 		  };
 
 
 			res.send(body);
-
 
   		
 		}else {

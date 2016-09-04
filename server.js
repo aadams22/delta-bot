@@ -125,17 +125,23 @@ app.post('/post', function(req, res){
 		if(status == 200) { 
 			flightData.findDepartures(data); 
 			var s = flights.sort(flightData.sortFlights);
-			
 
 
+			// msg = flightData.printF(sorted)
 
 
-			msg = flightData.printF(sorted)
-
+		var a = [];
+		for (var i = 0; s < f.length; i++) {
+			a.push("Flight Number: " + s[i].flightNumber 
+						+ ", Departure: " + s[i].departure
+						+ ", Arrival: "   + s[i].arrival
+						+ ", Arline: "		+ s[i].arrival)
+			}
+		}
 
 			body = {
 		    response_type: "in_channel",
-	   		text: msg
+	   		text: a.join("")
 
 		  };
 

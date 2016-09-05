@@ -28,62 +28,103 @@ var currentYear    = today.getFullYear();
 //===================================================================================
 
 
-app.post('/post', function(req, res){
-	origin 				= conversion.convertCity(req.body.text.split(/[ ]+/)[0]);
-	destination 	= conversion.convertCity(req.body.text.split(/[ ]+/)[1]);
-	departureDate = req.body.text.split(/[ ]+/)[2];
-	airline				= req.body.text.split(/[ ]+/)[3];
+// app.post('/post', function(req, res){
+// 	origin 				= conversion.convertCity(req.body.text.split(/[ ]+/)[0]);
+// 	destination 	= conversion.convertCity(req.body.text.split(/[ ]+/)[1]);
+// 	departureDate = req.body.text.split(/[ ]+/)[2];
+// 	airline				= req.body.text.split(/[ ]+/)[3];
 	
 
 
-	//if the departure param exists, check and see if the date is in the past, if the departure date does not exist, send error message
-	// if(departureDate) 		{ validations.isDateValid(departureDate); }else { validations.incompleteParams(departureDate) }
+// 	//if the departure param exists, check and see if the date is in the past, if the departure date does not exist, send error message
+// 	// if(departureDate) 		{ validations.isDateValid(departureDate); }else { validations.incompleteParams(departureDate) }
 	
-	// if(!origin) 						{ validations.incompleteParams(origin) }
-	// else if(!destination) 	{ validations.incompleteParams(destination) }
-	// else if(!airline) 			{ validations.incompleteParams(airline) }
-	// else 										{ 
+// 	if(!origin) 						{ validations.incompleteParams(origin) }
+// 	else if(!destination) 	{ validations.incompleteParams(destination) }
+// 	else if(!airline) 			{ validations.incompleteParams(airline) }
+// 	else 										{ 
 
 		
 
-		var url     = "http://terminal2.expedia.com/x/mflights/search?departureAirport=MSP&arrivalAirport=DEN&departureDate=2016-10-22&apikey=" + process.env.FLIGHTBOT_EXPEDIA_API_KEY;
-		// var url     = "http://terminal2.expedia.com/x/mflights/search?departureAirport=" + origin + "&arrivalAirport=" + destination + "&departureDate=" + departureDate + "&apikey=" + process.env.FLIGHTBOT_EXPEDIA_API_KEY;
-		var method  = 'GET';
-		var async   = true;
-		var request = new XMLHttpRequest();
+// 		var url     = "http://terminal2.expedia.com/x/mflights/search?departureAirport=MSP&arrivalAirport=DEN&departureDate=2016-10-22&apikey=" + process.env.FLIGHTBOT_EXPEDIA_API_KEY;
+// 		// var url     = "http://terminal2.expedia.com/x/mflights/search?departureAirport=" + origin + "&arrivalAirport=" + destination + "&departureDate=" + departureDate + "&apikey=" + process.env.FLIGHTBOT_EXPEDIA_API_KEY;
+// 		var method  = 'GET';
+// 		var async   = true;
+// 		var request = new XMLHttpRequest();
 
-		request.onload = function() {
-			var status = request.status;
-			var data 	 = JSON.parse(request.responseText);
+// 		request.onload = function() {
+// 			var status = request.status;
+// 			var data 	 = JSON.parse(request.responseText);
 
-			if(status == 200) { 
-				flightData.filterData(data); 
-				var s = flights.sort(flightData.sortFlights);
-				var p = flightData.removeDuplicates(x => x.flightNumber, s);
+// 			if(status == 200) { 
+// 				flightData.filterData(data); 
+// 				var s = flights.sort(flightData.sortFlights);
+// 				var p = flightData.removeDuplicates(x => x.flightNumber, s);
 
-				body = {
-								response_type: "in_channel",
-								text: "ORIGIN: " + origin + ". DESTINATION: " + destination + ". RESULTS: " + flightData.printF(p)
-								};
+// 				body = {
+// 								response_type: "in_channel",
+// 								text: "ORIGIN: " + origin + ". DESTINATION: " + destination + ". RESULTS: " + flightData.printF(p)
+// 								};
 
-				res.send(body);
+// 				res.send(body);
 	  		
-			// }else { 
-			// 	body = {
-			// 					response_type: "in_channel",
-			// 					text: validations.incompleteParams("flight info again.") 
-			// 					};
+// 			}else { 
+// 				body = {
+// 								response_type: "in_channel",
+// 								text: validations.incompleteParams("flight info again.") 
+// 								};
 
-			// 	res.send(body);
-			// }
+// 				res.send(body);
+// 			}
 			
-		};
+// 		};
 
-		request.open(method, url, async);
-		request.setRequestHeader("Content-Type", "json;");
-	  request.send();
-	}
-});
+// 		request.open(method, url, async);
+// 		request.setRequestHeader("Content-Type", "json;");
+// 	  request.send();
+// 	}
+// });
+
+
+var airline = "Delta";
+var o  = "MSP";
+var destination = "DEN";
+var dd = "2016-09-20";
+
+var url     = "http://terminal2.expedia.com/x/mflights/search?departureAirport=" + o + "&arrivalAirport=" + destination + "&departureDate=" + dd + "&apikey=" + process.env.FLIGHTBOT_EXPEDIA_API_KEY;
+// var url     = "http://terminal2.expedia.com/x/mflights/search?departureAirport=MSP&arrivalAirport=DEN&departureDate=2016-10-22&apikey=" + process.env.FLIGHTBOT_EXPEDIA_API_KEY;
+var method  = 'GET';
+var async   = true;
+var request = new XMLHttpRequest();
+
+
+request.onload = function() {
+	var status = request.status;
+	var data   = JSON.parse(request.responseText);
+	console.log("status ", status);
+
+	var d = flightData.filterData(data);
+	// console.log("d: ", d);
+	var s = flights.sort(flightData.sortFlights);
+	// console.log("s: ", s);
+	var p = flightData.removeDuplicates(x => x.flightNumber, s);
+	// console.log("P:", p);
+	console.log(flightData.printF(p))
+};
+
+request.open(method, url, async);
+request.setRequestHeader("Content-Type", "json;");
+request.send();
+
+
+
+
+
+
+
+
+
+
 
 
 //Sends to deployed view to make sure it's up and running! 
@@ -137,7 +178,9 @@ var conversion = {
 var flightData = {
 	filterData: function (d) {
 		for (var i = 0; i < d.legs.length; i++) {
-			if( airline == d.legs[i].segments[0].airlineName ) {
+			// console.log(d.legs[i].segments[0].arrivalAirportCode + " : " + destination + " - " + airline)
+
+			if( airline == d.legs[i].segments[0].airlineName && d.legs[i].segments[0].arrivalAirportCode === destination) {
 				flights.push({
 											"flightNumber": d.legs[i].segments[0].flightNumber,
 											"departure": d.legs[i].segments[0].departureTime,
@@ -149,7 +192,12 @@ var flightData = {
 											"arrivalAirportCode": d.legs[i].segments[0].arrivalAirportCode
 										});
 			}
-		};	
+
+		};
+		console.log('these are flights in fucntion: ');
+		
+
+		return flights;	
 	},
 	sortFlights: function(a,b) {
 		return a.timeEpochSec - b.timeEpochSec;
@@ -169,10 +217,10 @@ var flightData = {
 		var a = [];
 		for (var i = 0; i < f.length; i++) {
 			a.push("Flight Number: " + f[i].flightNumber 
-						+ ", Departure: "  + f[i].departure
-						+ ", Arrival: "    + f[i].arrival
-						+ ", Airline: "	   + f[i].airline
-						+ ", Departure Airport: "	   + f[i].departureAirportCode
+						// + ", Departure: "  + f[i].departure
+						// + ", Arrival: "    + f[i].arrival
+						// + ", Airline: "	   + f[i].airline
+						// + ", Departure Airport: "	   + f[i].departureAirportCode
 						+ ", Arrival Airport: "	     + f[i].arrivalAirportCode
 						+ " . ")		
 		};

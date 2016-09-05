@@ -39,14 +39,11 @@ app.post('/post', function(req, res){
 	//if the departure param exists, check and see if the date is in the past, if the departure date does not exist, send error message
 	// if(departureDate) 		{ validations.isDateValid(departureDate); }else { validations.incompleteParams(departureDate) }
 	
-	// if(!origin) 						{ validations.incompleteParams(origin) }
-	// else if(!destination) 	{ validations.incompleteParams(destination) }
-	// else if(!airline) 			{ validations.incompleteParams(airline) }
-	// else 										{ 
+	if(!origin) 						{ validations.incompleteParams(origin) }
+	else if(!destination) 	{ validations.incompleteParams(destination) }
+	else if(!airline) 			{ validations.incompleteParams(airline) }
+	else 										{ 
 
-		
-
-		// var url     = "http://terminal2.expedia.com/x/mflights/search?departureAirport=MSP&arrivalAirport=DEN&departureDate=2016-10-22&apikey=" + process.env.FLIGHTBOT_EXPEDIA_API_KEY;
 		var url     = "http://terminal2.expedia.com/x/mflights/search?departureAirport=" + origin + "&arrivalAirport=" + destination + "&departureDate=" + departureDate + "&apikey=" + process.env.FLIGHTBOT_EXPEDIA_API_KEY;
 		var method  = 'GET';
 		var async   = true;
@@ -63,7 +60,7 @@ app.post('/post', function(req, res){
 
 				body = {
 								response_type: "in_channel",
-								text: "ORIGIN: " + origin + ". DESTINATION: " + destination + ". RESULTS: " + flightData.printF(p)
+								text: origin + " -> " + destination + ".\n" + flightData.printF(p)
 								};
 
 				res.send(body);
@@ -83,47 +80,8 @@ app.post('/post', function(req, res){
 		request.setRequestHeader("Content-Type", "json;");
 	  request.send();
 
-	// }
+	}
 });
-
-
-
-//==============================================
-//FOR TESTING
-//==============================================
-// var airline = "Delta";
-// var o  = "MSP";
-// var destination = "DEN";
-// var dd = "2016-09-20";
-
-// var url     = "http://terminal2.expedia.com/x/mflights/search?departureAirport=" + o + "&arrivalAirport=" + destination + "&departureDate=" + dd + "&apikey=" + process.env.FLIGHTBOT_EXPEDIA_API_KEY;
-// // var url     = "http://terminal2.expedia.com/x/mflights/search?departureAirport=MSP&arrivalAirport=DEN&departureDate=2016-10-22&apikey=" + process.env.FLIGHTBOT_EXPEDIA_API_KEY;
-// var method  = 'GET';
-// var async   = true;
-// var request = new XMLHttpRequest();
-
-
-// request.onload = function() {
-// 	var status = request.status;
-// 	var data   = JSON.parse(request.responseText);
-// 	console.log("status ", status);
-
-// 	var d = flightData.filterData(data);
-// 	// console.log("d: ", d);
-// 	var s = flights.sort(flightData.sortFlights);
-// 	// console.log("s: ", s);
-// 	var p = flightData.removeDuplicates(x => x.flightNumber, s);
-// 	// console.log("P:", p);
-// 	console.log(flightData.printF(p))
-// };
-
-// request.open(method, url, async);
-// request.setRequestHeader("Content-Type", "json;");
-// request.send();
-
-
-
-
 
 //Sends to deployed view to make sure it's up and running! 
 app.get('/', function(req, res){
@@ -215,10 +173,10 @@ var flightData = {
 	printF: function(f) {
 		var a = [];
 		for (var i = 0; i < f.length; i++) {
-			a.push("Flight: " + f[i].flightNumber 
-						+ ", Departure: "  + f[i].departure
-						+ ", Arrival: "    + conversion.removeDate(f[i].arrival)
-						+ ", "	   + f[i].airline
+			a.push("Flight: " 			+ f[i].flightNumber 
+						+ ", "      			+ f[i].departure
+						+ ", Arrival: "   + conversion.removeDate(f[i].arrival)
+						// + ", "	   + f[i].airline
 						// + ", "	   + f[i].departureAirportCode
 						// + ", "	     + f[i].arrivalAirportCode
 						+ " . \n")		

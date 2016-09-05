@@ -124,7 +124,8 @@ app.post('/post', function(req, res){
 	else 										{ 
 
 		var request = new XMLHttpRequest();
-		var url     = "http://terminal2.expedia.com/x/mflights/search?departureAirport=MSP&arrivalAirport=DEN&departureDate=2016-09-20&apikey=" + process.env.FLIGHTBOT_EXPEDIA_API_KEY;
+
+		var url     = "http://terminal2.expedia.com/x/mflights/search?departureAirport=MSP&arrivalAirport=ATL&departureDate=2016-10-22&apikey=" + process.env.FLIGHTBOT_EXPEDIA_API_KEY;
 		// var url     = "http://terminal2.expedia.com/x/mflights/search?departureAirport=" + origin + "&arrivalAirport=" + destination + "&departureDate=" + departureDate + "&apikey=" + process.env.FLIGHTBOT_EXPEDIA_API_KEY;
 		var method  = 'GET';
 		var async   = true;

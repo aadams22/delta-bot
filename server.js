@@ -94,7 +94,6 @@ app.post('/post', function(req, res){
     request.open(method, url, async);
     request.setRequestHeader("Content-Type", "json;");
     request.send();
-
   }
 });
 
@@ -106,10 +105,6 @@ app.get('/', function(req, res){
 app.listen(app.get('port'), function() {
   console.log('Node app is running on port', app.get('port'));
 });
-
-
-
-
 
 
 //==========================================================================
@@ -174,7 +169,6 @@ var flightData = {
   removeDuplicates: function(k,a) {
         return a.filter(function(x) {
           var mySet = new Set();
-
           var key   = k(x); 
           var isNew = !mySet.has(key);
 
@@ -190,7 +184,7 @@ var flightData = {
             + ", "            + f[i].departure
             + ", Arrival: "  + conversion.removeDate(f[i].arrival)
             + "\n"
-             )    
+            )    
     };
     return a.join("");
   }

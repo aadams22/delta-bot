@@ -39,10 +39,28 @@ app.post('/post', function(req, res){
 	//if the departure param exists, check and see if the date is in the past, if the departure date does not exist, send error message
 	// if(departureDate) 		{ validations.isDateValid(departureDate); }else { validations.incompleteParams(departureDate) }
 	
-	if(!origin) 						{ validations.incompleteParams(origin) }
-	else if(!destination) 	{ validations.incompleteParams(destination) }
-	else if(!airline) 			{ validations.incompleteParams(airline) }
-	else 										{ 
+	if(!origin) { 
+			body = {
+							response_type: "in_channel",
+							text: validations.incompleteParams("departure city") 
+							};
+
+			res.send(body); 
+	}else if(!destination) { 
+			body = {
+							response_type: "in_channel",
+							text: validations.incompleteParams("destination city") 
+							};
+
+			res.send(body); 
+	}else if(!airline) { 
+			body = {
+							response_type: "in_channel",
+							text: validations.incompleteParams("airline") 
+							};
+
+			res.send(body); 	
+	}else 										{ 
 
 		var url     = "http://terminal2.expedia.com/x/mflights/search?departureAirport=" + origin + "&arrivalAirport=" + destination + "&departureDate=" + departureDate + "&apikey=" + process.env.FLIGHTBOT_EXPEDIA_API_KEY;
 		var method  = 'GET';
@@ -60,7 +78,7 @@ app.post('/post', function(req, res){
 
 				body = {
 								response_type: "in_channel",
-								text: origin + " -> " + destination + ".\n" + flightData.printF(p)
+								text: origin + " -> " + destination + "\n" + flightData.printF(p)
 								};
 
 				res.send(body);
@@ -138,8 +156,6 @@ var conversion = {
 var flightData = {
 	filterData: function (d) {
 		for (var i = 0; i < d.legs.length; i++) {
-			// console.log(d.legs[i].segments[0].arrivalAirportCode + " : " + destination + " - " + airline)
-
 			if( airline == d.legs[i].segments[0].airlineName && d.legs[i].segments[0].arrivalAirportCode === destination) {
 				flights.push({
 											"flightNumber": d.legs[i].segments[0].flightNumber,
@@ -152,7 +168,6 @@ var flightData = {
 											"arrivalAirportCode": d.legs[i].segments[0].arrivalAirportCode
 										});
 			}
-
 		};
 		return flights;	
 	},

@@ -60,7 +60,7 @@ app.post('/post', function(req, res){
 
 				body = {
 								response_type: "in_channel",
-								text: origin + " -> " + destination + ".\n" + flightData.printF(p)
+								text: origin + " -> " + destination + ".\n" + flightData.printF(p) + "\n"
 								};
 
 				res.send(body);
@@ -179,7 +179,7 @@ var flightData = {
 						// + ", "	   + f[i].airline
 						// + ", "	   + f[i].departureAirportCode
 						// + ", "	     + f[i].arrivalAirportCode
-						+ " . \n")		
+						)		
 		};
 		return a.join("");
 	}

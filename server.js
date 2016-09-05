@@ -217,7 +217,7 @@ var flightData = {
 						+ ", "	   + f[i].airline
 						// + ", Departure Airport: "	   + f[i].departureAirportCode
 						+ ", "	     + f[i].arrivalAirportCode
-						+ " . ")		
+						+ " . \n")		
 		};
 		return a.join("");
 	}

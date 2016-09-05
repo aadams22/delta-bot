@@ -37,13 +37,11 @@ var validations = {
 
 var conversion = {
 	convertDate: function(date) {
-		//checks if the date is in place 1 or 2 of the date
 		if (!isNaN(date.split(/[ ]+/)[0])) {  
 			return months.indexOf(date.split(/[ ]+/)[0] + 1)
 		}else if(!isNaN(date.split(/[ ]+/)[1])) {
 			return months.indexOf(date.split(/[ ]+/)[1] + 1)
 		}
-
 	},
 	convertCity: function(city) {
 		//runs a backbone query on the airport-codes module to find the IATA for user's input city
@@ -126,7 +124,8 @@ app.post('/post', function(req, res){
 	else 										{ 
 
 		var request = new XMLHttpRequest();
-		var url     = "http://terminal2.expedia.com/x/mflights/search?departureAirport=" + origin + "&arrivalAirport=" + destination + "&departureDate=" + departureDate + "&apikey=" + process.env.FLIGHTBOT_EXPEDIA_API_KEY;
+		var url     = "http://terminal2.expedia.com/x/mflights/search?departureAirport=MSP&arrivalAirport=DEN&departureDate=2016-09-20&apikey=" + process.env.FLIGHTBOT_EXPEDIA_API_KEY;
+		// var url     = "http://terminal2.expedia.com/x/mflights/search?departureAirport=" + origin + "&arrivalAirport=" + destination + "&departureDate=" + departureDate + "&apikey=" + process.env.FLIGHTBOT_EXPEDIA_API_KEY;
 		var method  = 'GET';
 		var async   = true;
 		

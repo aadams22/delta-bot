@@ -169,6 +169,10 @@ var conversion = {
 		if(!date.split('').length == 5) { 
 			return currentYear + '-' + date 
 		};
+	},
+	removeDate: function(date) {	
+		return date.split(" ")[3].split(":")[1] + ":" + date.split(" ")[3].split(":")[2] + " " + date.split(" ")[4];
+		
 	}
 };
 
@@ -212,11 +216,11 @@ var flightData = {
 		var a = [];
 		for (var i = 0; i < f.length; i++) {
 			a.push("Flight: " + f[i].flightNumber 
-						// + ", Departure: "  + f[i].departure
-						// + ", Arrival: "    + f[i].arrival
+						+ ", Departure: "  + f[i].departure
+						+ ", Arrival: "    + conversion.removeDate(f[i].arrival)
 						+ ", "	   + f[i].airline
-						// + ", Departure Airport: "	   + f[i].departureAirportCode
-						+ ", "	     + f[i].arrivalAirportCode
+						// + ", "	   + f[i].departureAirportCode
+						// + ", "	     + f[i].arrivalAirportCode
 						+ " . \n")		
 		};
 		return a.join("");

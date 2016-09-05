@@ -77,17 +77,15 @@ app.post('/post', function(req, res){
 				var p = flightData.removeDuplicates(x => x.flightNumber, s);
 
 				body = {
-								response_type: "in_channel",
-								text: origin + " -> " + destination + "\n" + flightData.printF(p)
-								};
-
-				res.send(body);
-	  		
+					response_type: "in_channel",
+					text: origin + " -> " + destination + "\n" + flightData.printF(p)
+					};
+				res.send(body);	
 			}else { 
 				body = {
-								response_type: "in_channel",
-								text: validations.incompleteParams("flight info again.") 
-								};
+					response_type: "in_channel",
+					text: validations.incompleteParams("flight info again.") 
+					};
 
 				res.send(body);
 			}

@@ -129,8 +129,8 @@ var conversion = {
 		};
 	},
 	removeDate: function(date) {	
-		return date.split(" ")[3].split(":")[1] + ":" + date.split(" ")[3].split(":")[2] + " " + date.split(" ")[4];
-		
+		var a = date.split(" ");
+		return  a[3].split(":")[0] + ":" + a[3].split(":")[1] + " " + a[4];	
 	}
 };
 

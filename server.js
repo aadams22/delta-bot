@@ -13,7 +13,7 @@ app.set('port', (process.env.PORT || 8080));
 
 // /getflights [origin, destination, departureDate, airline]
 
-
+//VARIABLE DECLARATIONS
 var origin			   = null;
 var destination    = null;
 var departureDate  = null;
@@ -24,7 +24,85 @@ var today 				 = new Date();
 var currentYear    = today.getFullYear();
 
 
+//===================================================================================
+//===================================================================================
 
+
+app.post('/post', function(req, res){
+	origin 				= conversion.convertCity(req.body.text.split(/[ ]+/)[0]);
+	destination 	= conversion.convertCity(req.body.text.split(/[ ]+/)[1]);
+	departureDate = req.body.text.split(/[ ]+/)[2];
+	airline				= req.body.text.split(/[ ]+/)[3];
+	
+
+
+	//if the departure param exists, check and see if the date is in the past, if the departure date does not exist, send error message
+	// if(departureDate) 		{ validations.isDateValid(departureDate); }else { validations.incompleteParams(departureDate) }
+	
+	// if(!origin) 						{ validations.incompleteParams(origin) }
+	// else if(!destination) 	{ validations.incompleteParams(destination) }
+	// else if(!airline) 			{ validations.incompleteParams(airline) }
+	// else 										{ 
+
+		
+
+		var url     = "http://terminal2.expedia.com/x/mflights/search?departureAirport=MSP&arrivalAirport=DEN&departureDate=2016-10-22&apikey=" + process.env.FLIGHTBOT_EXPEDIA_API_KEY;
+		// var url     = "http://terminal2.expedia.com/x/mflights/search?departureAirport=" + origin + "&arrivalAirport=" + destination + "&departureDate=" + departureDate + "&apikey=" + process.env.FLIGHTBOT_EXPEDIA_API_KEY;
+		var method  = 'GET';
+		var async   = true;
+		var request = new XMLHttpRequest();
+
+		request.onload = function() {
+			var status = request.status;
+			var data 	 = JSON.parse(request.responseText);
+
+			if(status == 200) { 
+				flightData.filterData(data); 
+				var s = flights.sort(flightData.sortFlights);
+				var p = flightData.removeDuplicates(x => x.flightNumber, s);
+
+				body = {
+								response_type: "in_channel",
+								text: "ORIGIN: " + origin + ". DESTINATION: " + destination + ". RESULTS: " + flightData.printF(p)
+								};
+
+				res.send(body);
+	  		
+			// }else { 
+			// 	body = {
+			// 					response_type: "in_channel",
+			// 					text: validations.incompleteParams("flight info again.") 
+			// 					};
+
+			// 	res.send(body);
+			// }
+			
+		};
+
+		request.open(method, url, async);
+		request.setRequestHeader("Content-Type", "json;");
+	  request.send();
+	}
+});
+
+
+//Sends to deployed view to make sure it's up and running! 
+app.get('/', function(req, res){
+  res.send("Huzzah! I still work! Now let's have some tea.");
+});
+
+app.listen(app.get('port'), function() {
+  console.log('Node app is running on port', app.get('port'));
+});
+
+
+
+
+
+
+//==========================================================================
+//FUNCTION DEFINITION
+//==========================================================================
 var validations = {
 	incompleteParams: function(fail) {
 			return 'There was an error. Please input correct ' + fail + '.'; 
@@ -57,18 +135,18 @@ var conversion = {
 
 
 var flightData = {
-	findDepartures: function (data) {
-		for (var i = 0; i < data.legs.length; i++) {
-			if( airline == data.legs[i].segments[0].airlineName ) {
+	filterData: function (d) {
+		for (var i = 0; i < d.legs.length; i++) {
+			if( airline == d.legs[i].segments[0].airlineName ) {
 				flights.push({
-											"flightNumber": data.legs[i].segments[0].flightNumber,
-											"departure": data.legs[i].segments[0].departureTime,
-											"arrival": data.legs[i].segments[0].arrivalTime,
-											"airline": data.legs[i].segments[0].airlineName,
-											"stops": data.legs[i].segments[0].stops,
-											"timeEpochSec": data.legs[i].segments[0].departureTimeEpochSeconds,
-											"departureAirportCode": data.legs[i].segments[0].departureAirportCode,
-											"arrivalAirportCode": data.legs[i].segments[0].arrivalAirportCode
+											"flightNumber": d.legs[i].segments[0].flightNumber,
+											"departure": d.legs[i].segments[0].departureTime,
+											"arrival": d.legs[i].segments[0].arrivalTime,
+											"airline": d.legs[i].segments[0].airlineName,
+											"stops": d.legs[i].segments[0].stops,
+											"timeEpochSec": d.legs[i].segments[0].departureTimeEpochSeconds,
+											"departureAirportCode": d.legs[i].segments[0].departureAirportCode,
+											"arrivalAirportCode": d.legs[i].segments[0].arrivalAirportCode
 										});
 			}
 		};	
@@ -102,73 +180,3 @@ var flightData = {
 	}
 
 }
-
-//===================================================================================
-//===================================================================================
-
-
-app.post('/post', function(req, res){
-	origin 				= conversion.convertCity(req.body.text.split(/[ ]+/)[0]);
-	destination 	= conversion.convertCity(req.body.text.split(/[ ]+/)[1]);
-	departureDate = req.body.text.split(/[ ]+/)[2];
-	airline				= req.body.text.split(/[ ]+/)[3];
-	
-
-
-	//if the departure param exists, check and see if the date is in the past, if the departure date does not exist, send error message
-	// if(departureDate) 		{ validations.isDateValid(departureDate); }else { validations.incompleteParams(departureDate) }
-	
-	// if(!origin) 						{ validations.incompleteParams(origin) }
-	// else if(!destination) 	{ validations.incompleteParams(destination) }
-	// else if(!airline) 			{ validations.incompleteParams(airline) }
-	// else 										{ 
-
-		var request = new XMLHttpRequest();
-
-		var url     = "http://terminal2.expedia.com/x/mflights/search?departureAirport=MSP&arrivalAirport=DEN&departureDate=2016-10-22&apikey=" + process.env.FLIGHTBOT_EXPEDIA_API_KEY;
-		// var url     = "http://terminal2.expedia.com/x/mflights/search?departureAirport=" + origin + "&arrivalAirport=" + destination + "&departureDate=" + departureDate + "&apikey=" + process.env.FLIGHTBOT_EXPEDIA_API_KEY;
-		var method  = 'GET';
-		var async   = true;
-		
-		request.onload = function() {
-			var status = request.status;
-			var data 	 = JSON.parse(request.responseText);
-
-			if(status == 200) { 
-				flightData.findDepartures(data); 
-				var s = flights.sort(flightData.sortFlights);
-				var p = flightData.removeDuplicates(x => x.flightNumber, s);
-
-				body = {
-								response_type: "in_channel",
-								text: "ORIGIN: " + origin + ". DESTINATION: " + destination + ". RESULTS: " + flightData.printF(s)
-								};
-
-				res.send(body);
-	  		
-			// }else { 
-			// 	body = {
-			// 					response_type: "in_channel",
-			// 					text: validations.incompleteParams("flight info again.") 
-			// 					};
-
-			// 	res.send(body);
-			// }
-			
-		};
-
-		request.open(method, url, async);
-		request.setRequestHeader("Content-Type", "json;");
-	  request.send();
-	}
-});
-
-
-//Sends to deployed view to make sure it's up and running! 
-app.get('/', function(req, res){
-  res.send("Huzzah! I still work! Now let's have some tea.");
-});
-
-app.listen(app.get('port'), function() {
-  console.log('Node app is running on port', app.get('port'));
-});

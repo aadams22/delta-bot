@@ -78,13 +78,24 @@ var flightData = {
 	sortFlights: function(a,b) {
 		return a.timeEpochSec - b.timeEpochSec;
 	},
+	removeDuplicates: function(k,a) {
+    return a.filter(function(x) {
+    	var mySet = new Set();
+
+    	var key   = k(x); 
+    	var isNew = !mySet.has(key);
+
+    	if (isNew) { return mySet.add(key) };
+    });
+
+	},
 	printF: function(f) {
 		var a = [];
 		for (var i = 0; i < f.length; i++) {
 			a.push("Flight Number: " + f[i].flightNumber 
 						+ ", Departure: "  + f[i].departure
 						+ ", Arrival: "    + f[i].arrival
-						+ ", Arline: "	   + f[i].airline
+						+ ", Airline: "	   + f[i].airline
 						+ ", Departure Airport: "	   + f[i].departureAirportCode
 						+ ", Arrival Airport: "	     + f[i].arrivalAirportCode
 						+ " . ")		
@@ -126,6 +137,7 @@ app.post('/post', function(req, res){
 			if(status == 200) { 
 				flightData.findDepartures(data); 
 				var s = flights.sort(flightData.sortFlights);
+				var p = flightData.removeDuplicates(x => x.flightNumber, s);
 
 				body = {
 								response_type: "in_channel",

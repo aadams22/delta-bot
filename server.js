@@ -1,10 +1,10 @@
-var express  		   = require('express');
-var app         	 = express();
-var airports  		 = require('airport-codes');
+var express  	   = require('express');
+var app            = express();
+var airports  	   = require('airport-codes');
 var XMLHttpRequest = require("xmlhttprequest").XMLHttpRequest;
 
 
-var bodyParser = require('body-parser');
+var bodyParser     = require('body-parser');
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
@@ -14,13 +14,13 @@ app.set('port', (process.env.PORT || 8080));
 // /getflights [origin, destination, departureDate, airline]
 
 //VARIABLE DECLARATIONS
-var origin			   = null;
+var origin		   = null;
 var destination    = null;
 var departureDate  = null;
-var airline				 = null;
+var airline		   = null;
 var body           = null;
-var flights				 = [];
-var today 				 = new Date();
+var flights		   = [];
+var today 		   = new Date();
 var currentYear    = today.getFullYear();
 
 
@@ -29,37 +29,37 @@ var currentYear    = today.getFullYear();
 
 
 app.post('/post', function(req, res){
-	origin 				= conversion.convertCity(req.body.text.split(/[ ]+/)[0]);
-	destination 	= conversion.convertCity(req.body.text.split(/[ ]+/)[1]);
+	origin 		  = conversion.convertCity(req.body.text.split(/[ ]+/)[0]);
+	destination   = conversion.convertCity(req.body.text.split(/[ ]+/)[1]);
 	departureDate = req.body.text.split(/[ ]+/)[2];
-	airline				= req.body.text.split(/[ ]+/)[3];
+	airline		  = req.body.text.split(/[ ]+/)[3];
 	
 
 
 	//if the departure param exists, check and see if the date is in the past, if the departure date does not exist, send error message
-	// if(departureDate) 		{ validations.isDateValid(departureDate); }else { validations.incompleteParams(departureDate) }
+	// if(departureDate) { validations.isDateValid(departureDate); }else { validations.incompleteParams(departureDate) }
 	
 	if(!origin) { 
-			body = {
-							response_type: "in_channel",
-							text: validations.incompleteParams("departure city") 
-							};
+		body = {
+				response_type: "in_channel",
+				text: validations.incompleteParams("departure city") 
+				};
 
-			res.send(body); 
+		res.send(body); 
 	}else if(!destination) { 
-			body = {
-							response_type: "in_channel",
-							text: validations.incompleteParams("destination city") 
-							};
+		body = {
+				response_type: "in_channel",
+				text: validations.incompleteParams("destination city") 
+				};
 
-			res.send(body); 
+		res.send(body); 
 	}else if(!airline) { 
-			body = {
-							response_type: "in_channel",
-							text: validations.incompleteParams("airline") 
-							};
+		body = {
+				response_type: "in_channel",
+				text: validations.incompleteParams("airline") 
+				};
 
-			res.send(body); 	
+		res.send(body); 	
 	}else 										{ 
 
 		var url     = "http://terminal2.expedia.com/x/mflights/search?departureAirport=" + origin + "&arrivalAirport=" + destination + "&departureDate=" + departureDate + "&apikey=" + process.env.FLIGHTBOT_EXPEDIA_API_KEY;
@@ -77,24 +77,23 @@ app.post('/post', function(req, res){
 				var p = flightData.removeDuplicates(x => x.flightNumber, s);
 
 				body = {
-					response_type: "in_channel",
-					text: origin + " -> " + destination + "\n" + flightData.printF(p)
-					};
+						response_type: "in_channel",
+						text: origin + " -> " + destination + "\n" + flightData.printF(p)
+						};
 				res.send(body);	
 			}else { 
 				body = {
-					response_type: "in_channel",
-					text: validations.incompleteParams("flight info again.") 
-					};
+					    response_type: "in_channel",
+			 		    text: validations.incompleteParams("flight info again.") 
+					    };
 
 				res.send(body);
 			}
-			
 		};
-
-		request.open(method, url, async);
-		request.setRequestHeader("Content-Type", "json;");
-	  request.send();
+ 
+    request.open(method, url, async);
+    request.setRequestHeader("Content-Type", "json;");
+    request.send();
 
 	}
 });
@@ -156,15 +155,15 @@ var flightData = {
 		for (var i = 0; i < d.legs.length; i++) {
 			if( airline == d.legs[i].segments[0].airlineName && d.legs[i].segments[0].arrivalAirportCode === destination) {
 				flights.push({
-											"flightNumber": d.legs[i].segments[0].flightNumber,
-											"departure": d.legs[i].segments[0].departureTime,
-											"arrival": d.legs[i].segments[0].arrivalTime,
-											"airline": d.legs[i].segments[0].airlineName,
-											"stops": d.legs[i].segments[0].stops,
-											"timeEpochSec": d.legs[i].segments[0].departureTimeEpochSeconds,
-											"departureAirportCode": d.legs[i].segments[0].departureAirportCode,
-											"arrivalAirportCode": d.legs[i].segments[0].arrivalAirportCode
-										});
+							"flightNumber": d.legs[i].segments[0].flightNumber,
+							"departure": d.legs[i].segments[0].departureTime,
+							"arrival": d.legs[i].segments[0].arrivalTime,
+							"airline": d.legs[i].segments[0].airlineName,
+							"stops": d.legs[i].segments[0].stops,
+							"timeEpochSec": d.legs[i].segments[0].departureTimeEpochSeconds,
+							"departureAirportCode": d.legs[i].segments[0].departureAirportCode,
+							"arrivalAirportCode": d.legs[i].segments[0].arrivalAirportCode
+    						});
 			}
 		};
 		return flights;	
@@ -173,25 +172,25 @@ var flightData = {
 		return a.timeEpochSec - b.timeEpochSec;
 	},
 	removeDuplicates: function(k,a) {
-    return a.filter(function(x) {
-    	var mySet = new Set();
+        return a.filter(function(x) {
+        	var mySet = new Set();
 
-    	var key   = k(x); 
-    	var isNew = !mySet.has(key);
+        	var key   = k(x); 
+        	var isNew = !mySet.has(key);
 
-    	if (isNew) { return mySet.add(key) };
-    });
+        	if (isNew) { return mySet.add(key) };
+        });
 
 	},
 	printF: function(f) {
 		var a = [];
 		for (var i = 0; i < f.length; i++) {
 			a.push(
-						"Flight: " 		  	+ f[i].flightNumber 
-						+ ", "      			+ f[i].departure
-						+ ", Arrival: "   + conversion.removeDate(f[i].arrival)
-						+ "\n"
-						)		
+				   "Flight: " 		+ f[i].flightNumber 
+				   + ", "      	    + f[i].departure
+				   + ", Arrival: "  + conversion.removeDate(f[i].arrival)
+				   + "\n"
+    			   )		
 		};
 		return a.join("");
 	}

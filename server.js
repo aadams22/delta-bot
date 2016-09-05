@@ -60,7 +60,7 @@ app.post('/post', function(req, res){
 
 				body = {
 								response_type: "in_channel",
-								text: origin + " -> " + destination + ".\n" + flightData.printF(p) + "\n"
+								text: origin + " -> " + destination + ".\n" + flightData.printF(p)
 								};
 
 				res.send(body);
@@ -173,12 +173,11 @@ var flightData = {
 	printF: function(f) {
 		var a = [];
 		for (var i = 0; i < f.length; i++) {
-			a.push("Flight: " 			+ f[i].flightNumber 
+			a.push(
+						"Flight: " 		  	+ f[i].flightNumber 
 						+ ", "      			+ f[i].departure
 						+ ", Arrival: "   + conversion.removeDate(f[i].arrival)
-						// + ", "	   + f[i].airline
-						// + ", "	   + f[i].departureAirportCode
-						// + ", "	     + f[i].arrivalAirportCode
+						+ "\n"
 						)		
 		};
 		return a.join("");

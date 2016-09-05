@@ -108,24 +108,25 @@ var flightData = {
 
 
 app.post('/post', function(req, res){
-	origin 				= conversion.convertCity(req.body.text.split(/[ ]+/)[0]);
-	destination 	= conversion.convertCity(req.body.text.split(/[ ]+/)[1]);
-	departureDate = req.body.text.split(/[ ]+/)[2];
-	airline				= req.body.text.split(/[ ]+/)[3];
+	// origin 				= conversion.convertCity(req.body.text.split(/[ ]+/)[0]);
+	// destination 	= conversion.convertCity(req.body.text.split(/[ ]+/)[1]);
+	// departureDate = req.body.text.split(/[ ]+/)[2];
+	// airline				= req.body.text.split(/[ ]+/)[3];
 	
-
+	//TESTING
+	airline				= req.body.text.split(/[ ]+/)[0];
 
 	//if the departure param exists, check and see if the date is in the past, if the departure date does not exist, send error message
 	// if(departureDate) 		{ validations.isDateValid(departureDate); }else { validations.incompleteParams(departureDate) }
 	
-	if(!origin) 						{ validations.incompleteParams(origin) }
-	else if(!destination) 	{ validations.incompleteParams(destination) }
-	else if(!airline) 			{ validations.incompleteParams(airline) }
-	else 										{ 
+	// if(!origin) 						{ validations.incompleteParams(origin) }
+	// else if(!destination) 	{ validations.incompleteParams(destination) }
+	// else if(!airline) 			{ validations.incompleteParams(airline) }
+	// else 										{ 
 
 		var request = new XMLHttpRequest();
 
-		var url     = "http://terminal2.expedia.com/x/mflights/search?departureAirport=MSP&arrivalAirport=ATL&departureDate=2016-10-22&apikey=" + process.env.FLIGHTBOT_EXPEDIA_API_KEY;
+		var url     = "http://terminal2.expedia.com/x/mflights/search?departureAirport=MSP&arrivalAirport=DEN&departureDate=2016-10-22&apikey=" + process.env.FLIGHTBOT_EXPEDIA_API_KEY;
 		// var url     = "http://terminal2.expedia.com/x/mflights/search?departureAirport=" + origin + "&arrivalAirport=" + destination + "&departureDate=" + departureDate + "&apikey=" + process.env.FLIGHTBOT_EXPEDIA_API_KEY;
 		var method  = 'GET';
 		var async   = true;
@@ -146,14 +147,14 @@ app.post('/post', function(req, res){
 
 				res.send(body);
 	  		
-			}else { 
-				body = {
-								response_type: "in_channel",
-								text: validations.incompleteParams("flight info again.") 
-								};
+			// }else { 
+			// 	body = {
+			// 					response_type: "in_channel",
+			// 					text: validations.incompleteParams("flight info again.") 
+			// 					};
 
-				res.send(body);
-			}
+			// 	res.send(body);
+			// }
 			
 		};
 

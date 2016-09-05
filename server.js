@@ -82,7 +82,7 @@ app.post('/post', function(req, res){
 		request.open(method, url, async);
 		request.setRequestHeader("Content-Type", "json;");
 	  request.send();
-	  
+
 	// }
 });
 
@@ -211,12 +211,12 @@ var flightData = {
 	printF: function(f) {
 		var a = [];
 		for (var i = 0; i < f.length; i++) {
-			a.push("Flight Number: " + f[i].flightNumber 
-						+ ", Departure: "  + f[i].departure
-						+ ", Arrival: "    + f[i].arrival
-						+ ", Airline: "	   + f[i].airline
+			a.push("Flight: " + f[i].flightNumber 
+						// + ", Departure: "  + f[i].departure
+						// + ", Arrival: "    + f[i].arrival
+						+ ", "	   + f[i].airline
 						// + ", Departure Airport: "	   + f[i].departureAirportCode
-						// + ", Arrival Airport: "	     + f[i].arrivalAirportCode
+						+ ", "	     + f[i].arrivalAirportCode
 						+ " . ")		
 		};
 		return a.join("");

@@ -61,7 +61,7 @@ app.post('/post', function(req, res){
            };
 
     res.send(body);   
-  }else                     { 
+  }else { 
 
     var url     = "http://terminal2.expedia.com/x/mflights/search?departureAirport=" + origin + "&arrivalAirport=" + destination + "&departureDate=" + departureDate + "&apikey=" + process.env.FLIGHTBOT_EXPEDIA_API_KEY;
     var method  = 'GET';
@@ -77,10 +77,18 @@ app.post('/post', function(req, res){
         var s = flights.sort(flightData.sortFlights);
         var p = flightData.removeDuplicates(x => x.flightNumber, s);
 
-        body = {
-               response_type: "in_channel",
-               text: origin + " -> " + destination + "\n" + flightData.printF(p)
-               };
+        // body = {
+        //        response_type: "in_channel",
+        //        text: origin + " -> " + destination + "\n" + flightData.printF(p)
+        //        };
+
+        body = { "attachments": [{
+                    "title": origin + " -> " + destination,
+                    "pretext": "Here are your flight options:",
+                    "text": flightData.printF(p),
+                    "mrkdwn_in": [ "text", "pretext" ]
+                }]}
+
         res.send(body); 
       }else { 
         body = {
@@ -157,7 +165,8 @@ var flightData = {
     //filters data from api and saves the user data to the flights array
     for (var i = 0; i < d.legs.length; i++) {
       //checks data for duplicity and that it's for the correct arline before it's saved to the array 
-      if( airline == d.legs[i].segments[0].airlineName && d.legs[i].segments[0].arrivalAirportCode === destination) {
+      //triple = for performance benefits
+      if( airline === d.legs[i].segments[0].airlineName && d.legs[i].segments[0].arrivalAirportCode === destination) {
         flights.push({
                     "flightNumber": d.legs[i].segments[0].flightNumber,
                     "departure": d.legs[i].segments[0].departureTime,

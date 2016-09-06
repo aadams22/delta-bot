@@ -77,11 +77,6 @@ app.post('/post', function(req, res){
         var s = flights.sort(flightData.sortFlights);
         var p = flightData.removeDuplicates(x => x.flightNumber, s);
 
-        // body = {
-        //        response_type: "in_channel",
-        //        text: origin + " -> " + destination + "\n" + flightData.printF(p)
-        //        };
-
         body = { "attachments": [{
                     "title": origin + " -> " + destination,
                     "pretext": "Here are your flight options:",
@@ -90,14 +85,14 @@ app.post('/post', function(req, res){
                 }]}
 
         res.send(body); 
-      }else { 
+      }/*else { 
         body = {
                response_type: "in_channel",
                text: validations.incompleteParams("flight info again.") 
                };
 
         res.send(body);
-      }
+      }*/
     };
  
     request.open(method, url, async);
@@ -117,9 +112,9 @@ app.listen(app.get('port'), function() {
 });
 
 
-//==========================================================================
-//FUNCTION DEFINITION
-//==========================================================================
+/*==========================================================================
+FUNCTION DEFINITION
+==========================================================================*/
 var validations = {
   incompleteParams: function(fail) {
       //returns string to be sent as an error message

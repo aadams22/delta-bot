@@ -78,6 +78,9 @@ app.post('/post', function(req, res){
         var p = flightData.removeDuplicates(x => x.flightNumber, s);
 
         body = { "attachments": [{
+                    "fallback": "List of flights that match user's input",
+                    "color": "#08c",
+                    "author_name": "Ashleigh Adams",
                     "title": origin + " -> " + destination,
                     "pretext": "Here are your flight options:",
                     "text": flightData.printF(p),

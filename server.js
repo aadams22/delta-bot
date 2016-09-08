@@ -88,14 +88,14 @@ app.post('/post', function(req, res){
                 }]}
 
         res.send(body); 
-      }/*else { 
+      }else { 
         body = {
                response_type: "in_channel",
                text: validations.incompleteParams("flight info again.") 
                };
 
         res.send(body);
-      }*/
+      }
     };
  
     request.open(method, url, async);

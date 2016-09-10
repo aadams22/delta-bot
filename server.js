@@ -197,6 +197,7 @@ var flightData = {
   printF: function(f) {
     var a = [];
     //saves the sorted flight data to an array as a readable string
+    //..also printF means, printFlight data...I C you're not quite thinking in Javascript ;) 
     for (var i = 0; i < f.length; i++) {
       a.push(
             "Flight: "       + f[i].flightNumber 

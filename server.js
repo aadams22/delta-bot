@@ -75,7 +75,7 @@ app.post('/post', function(req, res){
       if(status == 200) { 
         flightData.filterData(data); 
         var s = flights.sort(flightData.sortFlights);
-        var p = flightData.removeDuplicates(x => x.flightNumber, s);
+        // var p = flightData.removeDuplicates(x => x.flightNumber, s);
 
         body = { "attachments": [{
                     "fallback": "List of flights that match user's input",
@@ -83,7 +83,7 @@ app.post('/post', function(req, res){
                     "author_name": "Ashleigh Adams",
                     "title": origin + " -> " + destination,
                     "pretext": "Here are your flight options:",
-                    "text": flightData.printF(p),
+                    "text": flightData.printF(s),
                     "mrkdwn_in": [ "text", "pretext" ]
                 }]}
 

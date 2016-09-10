@@ -89,7 +89,6 @@ app.post('/post', function(req, res){
 
         res.send(body); 
         body = null;
-        data = null;
       }else { 
         body = {
                response_type: "in_channel",

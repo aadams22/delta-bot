@@ -19,6 +19,9 @@ var destination    = null;
 var departureDate  = null;
 var airline        = null;
 var body           = null;
+var mySet          = null;
+var key            = null; 
+var isNew          = null;
 var flights        = [];
 var today          = new Date();
 var currentYear    = today.getFullYear();
@@ -188,9 +191,9 @@ var flightData = {
   removeDuplicates: function(k,a) {
         //removes duplicates by giving them a key
         return a.filter(function(x) {
-          var mySet = new Set();
-          var key   = k(x); 
-          var isNew = !mySet.has(key);
+          mySet = new Set();
+          key   = k(x); 
+          isNew = !mySet.has(key);
           //returns the unique values
           if (isNew) { return mySet.add(key) };
         });

@@ -89,6 +89,7 @@ app.post('/post', function(req, res){
 
         res.send(body); 
         body = null;
+        data = null;
       }else { 
         body = {
                response_type: "in_channel",
@@ -96,6 +97,7 @@ app.post('/post', function(req, res){
                };
 
         res.send(body);
+        body = null;
       }
     };
  
@@ -122,7 +124,7 @@ FUNCTION DEFINITION
 var validations = {
   incompleteParams: function(fail) {
       //returns string to be sent as an error message
-      return 'There was an error. Please input correct ' + fail + '.'; 
+      return 'Sorry! It seems there was an error. Try to input the correct ' + fail + '.'; 
   },
   isDateValid: function(d) {
     //checks to see if the date has already passed
